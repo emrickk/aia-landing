@@ -1,0 +1,2247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unity AI. Built by Unity, native to the Editor.</title>
+<meta name="description" content="Unity AI is the deepest integration possible with the Unity Editor. Deep project context, engine-authoritative patterns and APIs, verified in Play Mode. Open Beta on Unity 6.">
+
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Unity AI. Built by Unity, native to the Editor.">
+<meta property="og:description" content="Unity AI is the deepest integration possible with the Unity Editor. Deep project context, engine-authoritative patterns and APIs, verified in Play Mode. Open Beta on Unity 6.">
+<meta property="og:image" content="hero-poster.webp">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="Unity AI running inside the Unity Editor.">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Unity AI. Built by Unity, native to the Editor.">
+<meta name="twitter:description" content="The deepest integration possible with the Unity Editor. Deep project context, engine-authoritative patterns and APIs, verified in Play Mode.">
+<meta name="twitter:image" content="hero-poster.webp">
+<meta name="twitter:image:alt" content="Unity AI running inside the Unity Editor.">
+
+<link rel="preload" as="image" href="hero-poster.webp" type="image/webp">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #000;
+    --surface-dark: #141414;
+    --surface-elev: #262626;
+    --stroke-dark: #424242;
+    --muted-dark: #a6a6a6;
+    --offwhite: #e6e6e6;
+    --fg-dark-mode: #fff;
+
+    --bg-light: #fff;
+    --bg-light-alt: #f5f5f5;
+    --fg-light-mode: #141414;
+    --muted-light: #585858;
+
+    --accent: #3358D4;
+    --accent-hero: #3A5BC7;
+    --accent-hover: #5779E8;
+
+    --ff-display: "General Sans", "Nohemi", "Helvetica Neue", system-ui, sans-serif;
+    --ff-body: "Inter", "Helvetica Neue", system-ui, -apple-system, sans-serif;
+
+    --container: 1440px;
+    --container-pad: var(--space-8);
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
+    --space-9: 96px;
+    --space-10: 128px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--ff-body);
+    color: var(--fg-light-mode);
+    background: var(--bg-light);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "cv02","cv03","cv04","cv11";
+  }
+  img, video { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  .container { max-width: var(--container); margin: 0 auto; padding: 0 var(--container-pad); }
+  @media (max-width: 880px) { :root { --container-pad: var(--space-5); } }
+
+  .ph-banner {
+    background: #ffe082; color: #4a3900;
+    font-size: 16px; text-align: center;
+    padding: var(--space-3) var(--space-4); font-weight: 600;
+    letter-spacing: -0.16px;
+    line-height: 1.4;
+  }
+
+  h1, h2, h3, h4 { font-family: var(--ff-display); font-weight: 500; }
+  h1, h2 { letter-spacing: -0.012em; }
+
+  /* nav */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg); color: var(--fg-dark-mode);
+    height: 48px; display: flex; align-items: center;
+  }
+  .nav .container { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+  .nav-left { display: flex; align-items: center; gap: var(--space-7); }
+  .nav-logo {
+    font-family: var(--ff-display); font-weight: 500; font-size: 18px;
+    letter-spacing: -0.02em; display: flex; align-items: center; gap: var(--space-2);
+  }
+  .nav-logo .cube {
+    width: 18px; height: 18px; background: var(--fg-dark-mode);
+    border-radius: 2px; display: inline-block; transform: rotate(45deg);
+  }
+  .nav-links { display: flex; gap: var(--space-5); font-size: 14px; font-weight: 400; }
+  .nav-links a {
+    color: var(--fg-dark-mode);
+    background-image: linear-gradient(to right, #fff 50%, rgba(0,0,0,0) 50%);
+    background-size: 200% 1px;
+    background-position: 100% 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+    transition: background-position 0.3s ease;
+  }
+  .nav-links a:hover { background-position: 0% 100%; }
+  .nav-right { display: flex; align-items: center; gap: var(--space-2); }
+
+  /* mobile nav toggle (hamburger) */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px; /* sub-token hairline spacing */
+    width: 32px; height: 32px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-right: var(--space-1);
+  }
+  .nav-toggle span {
+    display: block;
+    width: 20px; height: 2px;
+    background: #fff;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+    transform-origin: center;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px; /* sub-token hairline spacing */
+    height: 32px; padding: 0 var(--space-4);
+    border-radius: 999px;
+    font-family: var(--ff-body);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: -0.16px;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.15s, color 0.15s;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-chip { background: var(--surface-elev); color: #fff; }
+  .btn-chip:hover { background: #333; }
+  .btn-ghost-dark { background: transparent; color: #fff; border-color: var(--stroke-dark); }
+  .btn-ghost-dark:hover { background: rgba(255,255,255,0.05); }
+  .btn-ghost-light { background: transparent; color: var(--fg-light-mode); border-color: #d4d4d4; }
+  .btn-ghost-light:hover { background: #f5f5f5; }
+  .btn-lg { height: 48px; padding: 0 var(--space-5); font-size: 14px; font-weight: 600; }
+
+  /* hero */
+  .hero {
+    position: relative; min-height: calc(100vh - 48px);
+    background: var(--bg); color: var(--fg-dark-mode);
+    overflow: hidden; display: flex; align-items: flex-end;
+    padding: 0 0 var(--space-8);
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse at 25% 30%, rgba(51,88,212,0.18), transparent 55%),
+      radial-gradient(ellipse at 80% 70%, rgba(87,121,232,0.12), transparent 60%),
+      #000;
+  }
+  .hero-video {
+    position: absolute; inset: 0; z-index: 1;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    filter: saturate(1.05) contrast(1.02) brightness(0.62);
+  }
+  .hero-overlay {
+    position: absolute; inset: 0; z-index: 2;
+    background:
+      radial-gradient(ellipse 65% 80% at 95% 55%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 55%, transparent 100%),
+      linear-gradient(90deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.55) 100%),
+      linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.32) 40%, rgba(0,0,0,0.88) 100%),
+      rgba(0,0,0,0.2);
+  }
+  .hero-content { position: relative; z-index: 3; width: 100%; }
+  .hero-content-inner { max-width: 1280px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 6px; /* sub-token hairline spacing */
+    font-family: var(--ff-body);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--fg-dark-mode);
+    margin-bottom: var(--space-3);
+  }
+  .eyebrow::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+  .light .eyebrow, .alt .eyebrow { color: var(--fg-light-mode); }
+
+  .hero h1 {
+    font-size: clamp(30px, 4.5vw, 62px);
+    line-height: 1.06;
+    letter-spacing: -0.015em;
+    margin-bottom: var(--space-5);
+    font-weight: 500;
+    text-shadow: 0 2px 40px rgba(0,0,0,0.45);
+  }
+  .hero h1 .accent {
+    color: var(--accent);
+    background: linear-gradient(
+      90deg,
+      #3358D4 0%,
+      #5779E8 25%,
+      #b4c4f5 50%,
+      #5779E8 75%,
+      #3358D4 100%
+    );
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 0.06em 0.04em;
+    margin: -0.06em -0.04em;
+    display: inline-block;
+    animation: unityShimmer 5s linear infinite;
+  }
+  @keyframes unityShimmer {
+    0%   { background-position: 180% 50%; }
+    100% { background-position: -80% 50%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero h1 .accent { animation: none; }
+  }
+  .hero h1 .beat {
+    display: block;
+    opacity: 0; transform: translateY(10px);
+    animation: heroBeat 0.7s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  .hero h1 .beat:nth-child(1) { animation-delay: 0.15s; }
+  .hero h1 .beat:nth-child(2) { animation-delay: 0.45s; }
+  .hero h1 .beat:nth-child(3) { animation-delay: 0.75s; }
+  @keyframes heroBeat { to { opacity: 1; transform: translateY(0); } }
+
+  .hero-sub {
+    font-size: clamp(16px, 1.3vw, 18px);
+    color: rgba(255,255,255,0.88);
+    max-width: 780px;
+    margin-bottom: var(--space-6);
+    line-height: 1.55; font-weight: 400;
+    text-shadow: 0 1px 20px rgba(0,0,0,0.55);
+  }
+  .hero-ctas { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+
+  .hero-stats {
+    margin-top: var(--space-8);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-7);
+    max-width: 1080px;
+  }
+  .hero-stat .num {
+    font-family: var(--ff-display);
+    font-weight: 500;
+    font-size: clamp(34px, 4vw, 52px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--fg-dark-mode);
+  }
+  .hero-stat .num sup {
+    font-size: 0.38em; color: var(--muted-dark);
+    margin-left: 2px; vertical-align: super; /* sub-token hairline spacing */
+  }
+  .hero-stat .label {
+    margin-top: var(--space-3);
+    color: #c8c8c8;
+    font-size: 15px;
+    line-height: 1.45;
+    max-width: 340px;
+    text-shadow: 0 1px 16px rgba(0,0,0,0.55);
+  }
+  .hero-footnote {
+    margin-top: var(--space-5);
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: -0.01em;
+    max-width: 720px;
+    text-shadow: 0 1px 16px rgba(0,0,0,0.55);
+  }
+
+  /* section shells */
+  section.block { padding: var(--space-9) 0; }
+  section.block.light { background: var(--bg-light); color: var(--fg-light-mode); }
+  section.block.alt { background: var(--bg-light-alt); color: var(--fg-light-mode); }
+  section.block.dark { background: var(--bg); color: var(--fg-dark-mode); }
+  @media (max-width: 880px) { section.block { padding: var(--space-8) 0; } }
+
+  /* why unity ai is better */
+  .why-simple-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+    align-items: stretch;
+  }
+  .why-simple-card {
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 12px;
+    padding: var(--space-7) var(--space-6);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .why-simple-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.05);
+  }
+  .why-simple-num {
+    font-family: var(--ff-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: var(--space-3);
+  }
+  .why-simple-card h3 {
+    font-family: var(--ff-display);
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.012em;
+    color: var(--fg-light-mode);
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-5);
+    border-bottom: 1px solid #ebebeb;
+  }
+  .why-simple-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .why-simple-card li {
+    padding-left: var(--space-5);
+    position: relative;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--muted-light);
+  }
+  .why-simple-card li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 11px; /* sub-token hairline offset to align with line-height baseline */
+    width: 12px;
+    height: 2px;
+    background: var(--accent);
+  }
+  .why-simple-card li strong {
+    color: var(--fg-light-mode);
+    font-weight: 600;
+  }
+  @media (max-width: 1100px) {
+    .why-simple-grid { grid-template-columns: 1fr; gap: var(--space-4); }
+    .why-simple-card { padding: var(--space-6) var(--space-5); }
+  }
+
+  .section-head { max-width: 800px; margin-bottom: var(--space-7); }
+  .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+  .section-head h2 {
+    font-size: clamp(36px, 4.2vw, 52px);
+    line-height: 1.04;
+    letter-spacing: -0.012em;
+    margin-bottom: var(--space-4);
+    font-weight: 500;
+  }
+  .section-head p {
+    font-size: 18px;
+    color: var(--muted-light);
+    max-width: 680px;
+    line-height: 1.55;
+  }
+  .dark .section-head p { color: var(--muted-dark); }
+
+  /* how-it-works (3 steps) — filled dark cards, original style */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+  }
+  .step-card {
+    background: var(--surface-dark);
+    color: var(--fg-dark-mode);
+    border-radius: 12px;
+    padding: var(--space-6) var(--space-5) var(--space-6);
+    transition: transform 0.2s;
+    display: flex; flex-direction: column;
+    min-height: 340px;
+  }
+  .step-card:hover { transform: translateY(-2px); }
+  .step-index {
+    font-family: var(--ff-display);
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--muted-dark);
+    margin-bottom: var(--space-7);
+    letter-spacing: 0.04em;
+  }
+  .step-card h3 {
+    font-family: var(--ff-display);
+    font-size: 22px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    font-weight: 500;
+    margin-bottom: var(--space-3);
+    color: var(--fg-dark-mode);
+  }
+  .step-card p {
+    color: var(--muted-dark);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  /* capability demo rows — original style */
+  .demo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+    align-items: center;
+    padding: var(--space-8) 0;
+  }
+  .demo + .demo { border-top: 1px solid #e6e6e6; }
+  .alt .demo + .demo { border-top-color: #e0e0e0; }
+  .demo.reverse > .demo-media,
+  .demo.reverse > .demo-stat { order: -1; }
+  .demo-copy .tag {
+    font-family: var(--ff-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: -0.16px;
+    color: var(--accent);
+    margin-bottom: var(--space-4);
+    display: inline-flex; align-items: center; gap: 6px; /* sub-token hairline spacing */
+  }
+  .demo-copy .tag::before {
+    content: "";
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+  .demo-copy h3 {
+    font-family: var(--ff-display);
+    font-size: clamp(28px, 2.8vw, 36px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    font-weight: 500;
+    margin-bottom: var(--space-4);
+  }
+  .demo-copy h3.demo-sub {
+    font-size: clamp(20px, 1.9vw, 24px);
+    line-height: 1.2;
+    color: var(--fg-light-mode);
+    margin-bottom: var(--space-3);
+  }
+  .demo-sub-block + .demo-sub-block { margin-top: var(--space-7); }
+
+  /* Capabilities · 01 — single 2-col layout, visual stretches to match copy */
+  .cap-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: var(--space-8);
+    align-items: stretch;
+  }
+  .cap-layout .section-head { margin-bottom: var(--space-8); }
+  .cap-layout .section-head h2 { margin-bottom: var(--space-4); }
+  .cap-layout .demo-sub-block + .demo-sub-block { margin-top: var(--space-8); }
+  .cap-right { display: flex; }
+  .cap-right .demo-stat {
+    flex: 1;
+    aspect-ratio: auto;
+    width: 100%;
+    min-height: 520px;
+  }
+  .cap-layout.reverse .cap-left { order: 2; }
+  .cap-layout.reverse .cap-right { order: 1; }
+  @media (max-width: 880px) {
+    .cap-layout { grid-template-columns: 1fr; gap: var(--space-7); }
+    .cap-layout .section-head { margin-bottom: var(--space-7); }
+    .cap-layout .demo-sub-block + .demo-sub-block { margin-top: var(--space-7); }
+    .cap-right .demo-stat { min-height: 360px; }
+    .cap-layout.reverse .cap-left,
+    .cap-layout.reverse .cap-right { order: 0; }
+  }
+
+  /* scroll-reveal — apple-style fade + rise */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
+      transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+  .reveal[data-delay="1"] { transition-delay: 0.14s; }
+  .reveal[data-delay="2"] { transition-delay: 0.28s; }
+  .reveal[data-delay="3"] { transition-delay: 0.42s; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { transition: none; opacity: 1; transform: none; }
+  }
+  .demo-copy p {
+    font-size: 17px;
+    color: var(--muted-light);
+    margin-bottom: var(--space-4);
+    line-height: 1.55;
+  }
+  .demo-copy ul { list-style: none; margin-bottom: var(--space-5); }
+  .demo-copy li {
+    padding-left: var(--space-4);
+    position: relative;
+    font-size: 15px;
+    color: var(--fg-light-mode);
+    margin-bottom: var(--space-2);
+    line-height: 1.5;
+  }
+  .demo-copy li::before {
+    content: "";
+    position: absolute; left: 0; top: 9px; /* sub-token hairline offset */
+    width: 10px; height: 2px;
+    background: var(--accent);
+  }
+  .demo-link {
+    display: inline-flex; align-items: center; gap: 6px; /* sub-token hairline spacing */
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 600;
+    background-image: linear-gradient(to right, var(--accent-hero) 50%, rgba(0,0,0,0) 50%);
+    background-size: 200% 1px;
+    background-position: 100% 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+    transition: background-position 0.3s ease;
+  }
+  .demo-link:hover { background-position: 0% 100%; }
+  .demo-media {
+    aspect-ratio: 16/10;
+    background:
+      radial-gradient(ellipse at 30% 30%, rgba(51,88,212,0.15), rgba(0,0,0,0.9)),
+      var(--surface-dark);
+    border-radius: 12px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.68);
+    font-family: var(--ff-body);
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    padding: var(--space-5);
+    gap: var(--space-3);
+    letter-spacing: -0.16px;
+  }
+  .demo-media::before {
+    content: "▶";
+    font-size: 28px;
+    color: rgba(51,88,212,0.85);
+    line-height: 1;
+  }
+
+  /* demo video (real mp4 in a capability demo slot) */
+  .demo-video {
+    aspect-ratio: 16/9;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  }
+  .demo-video video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .demo-video-figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .demo-video-caption {
+    font-size: 14px;
+    color: var(--muted-light);
+    font-family: var(--ff-body);
+    line-height: 1.4;
+    text-align: center;
+    letter-spacing: -0.01em;
+  }
+  .demo-image {
+    aspect-ratio: 16/10;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--surface-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  }
+  .demo-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* stat block for capability demo rows (right side) — matches demo-media frame */
+  .demo-stat {
+    aspect-ratio: 16/10;
+    background:
+      radial-gradient(ellipse at 30% 30%, rgba(51,88,212,0.18), rgba(0,0,0,0.9)),
+      var(--surface-dark);
+    border-radius: 12px;
+    padding: var(--space-7) var(--space-7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-3);
+  }
+  .demo-stat .stat-label {
+    font-family: var(--ff-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.62);
+  }
+  .demo-stat .stat-num {
+    font-family: var(--ff-display);
+    font-weight: 500;
+    font-size: clamp(56px, 7.5vw, 104px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+  .demo-stat .stat-num.placeholder { color: rgba(255,255,255,0.38); }
+  .demo-stat.demo-stat-empty {
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: var(--space-7);
+  }
+  .demo-stat .ph-label {
+    font-family: var(--ff-body);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .demo-stat .stat-explain {
+    font-size: 15px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.82);
+    max-width: 100%;
+  }
+  @media (max-width: 880px) {
+    .demo-stat { padding: var(--space-5) var(--space-6); gap: var(--space-3); }
+  }
+
+  /* breather band — mid-page pivot between Cap 02 and Cap 03 */
+  .breather {
+    padding: var(--space-10) 0;
+    background: var(--bg);
+    color: var(--fg-dark-mode);
+    text-align: center;
+  }
+  .breather .quote {
+    font-family: var(--ff-display);
+    font-size: clamp(32px, 4.2vw, 56px);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.012em;
+    max-width: 1080px;
+    margin: 0 auto var(--space-5);
+  }
+  .breather .quote .accent { color: var(--accent); }
+  .breather .attribution {
+    font-family: var(--ff-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted-dark);
+  }
+  @media (max-width: 880px) {
+    .breather { padding: var(--space-8) 0; }
+  }
+
+
+  /* showcase — original light style */
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+  }
+  .showcase-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #ebebeb;
+  }
+  .showcase-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+  .showcase-thumb {
+    aspect-ratio: 16/10;
+    background:
+      linear-gradient(135deg, rgba(51,88,212,0.2), rgba(0,0,0,0.9)),
+      var(--surface-dark);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.55);
+    font-family: var(--ff-body);
+    font-size: 12px;
+    letter-spacing: -0.16px;
+    position: relative;
+  }
+  .showcase-meta { padding: var(--space-4) var(--space-5) var(--space-5); }
+  .showcase-tag {
+    font-family: var(--ff-body);
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--space-2);
+  }
+  .showcase-title {
+    font-family: var(--ff-display);
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.2;
+    margin-bottom: var(--space-1);
+    color: var(--fg-light-mode);
+    letter-spacing: -0.01em;
+  }
+  .showcase-dev { font-size: 13px; color: var(--muted-light); }
+  .showcase-quote {
+    margin-top: var(--space-3);
+    font-size: 14px;
+    color: var(--fg-light-mode);
+    line-height: 1.5;
+  }
+  .showcase-cta-row { text-align: center; margin-top: var(--space-7); }
+
+  /* CTA band — accent blue, original style */
+  .cta-band {
+    padding: var(--space-9) 0;
+    background: var(--accent);
+    color: var(--fg-dark-mode);
+    text-align: center;
+  }
+  .cta-band h2 {
+    font-family: var(--ff-display);
+    font-size: clamp(40px, 4.5vw, 64px);
+    line-height: 1.02;
+    letter-spacing: -0.012em;
+    font-weight: 500;
+    max-width: 900px;
+    margin: 0 auto var(--space-4);
+  }
+  .cta-band p {
+    font-size: 18px;
+    color: rgba(255,255,255,0.92);
+    max-width: 620px;
+    margin: 0 auto var(--space-6);
+    line-height: 1.5;
+  }
+  .cta-band .btn-primary { background: var(--fg-light-mode); color: var(--fg-dark-mode); }
+  .cta-band .btn-primary:hover { background: #000; }
+  .cta-band .btn-ghost-dark { border-color: rgba(255,255,255,0.5); }
+  .cta-band .btn-ghost-dark:hover { background: rgba(255,255,255,0.1); }
+  .cta-row { display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap; }
+
+  /* FAQ */
+  .faq-list { max-width: 880px; margin: 0 auto; }
+  .faq-item {
+    border-top: 1px solid #e0e0e0;
+    padding: var(--space-5) 0;
+  }
+  .faq-item:last-child { border-bottom: 1px solid #e0e0e0; }
+  .faq-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    cursor: pointer;
+    font-family: var(--ff-body);
+    font-size: 20px; font-weight: 500;
+    color: var(--fg-light-mode);
+    gap: var(--space-5); line-height: 1.4;
+  }
+  .faq-q::after {
+    content: "+";
+    font-size: 28px;
+    color: var(--muted-light);
+    font-weight: 400;
+    transition: transform 0.25s ease;
+    line-height: 0.8;
+  }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.3s ease;
+    color: var(--muted-light);
+    font-size: 16px; line-height: 1.55;
+  }
+  .faq-item.open .faq-a { max-height: 500px; padding-top: var(--space-3); }
+
+  /* footer */
+  footer {
+    background: var(--surface-dark);
+    color: var(--muted-dark);
+    padding: var(--space-8) 0 var(--space-7);
+    font-size: 14px;
+  }
+  footer .grid {
+    display: grid;
+    grid-template-columns: 2fr repeat(4, 1fr);
+    gap: var(--space-7);
+    margin-bottom: var(--space-7);
+  }
+  footer .brand { color: var(--fg-dark-mode); font-family: var(--ff-display); font-weight: 500; font-size: 20px; margin-bottom: var(--space-2); }
+  footer .brand-tag { color: var(--muted-dark); font-size: 13px; }
+  footer h5 {
+    font-family: var(--ff-body);
+    color: var(--fg-dark-mode);
+    font-weight: 600; font-size: 13px;
+    margin-bottom: var(--space-3); letter-spacing: -0.16px;
+  }
+  footer ul { list-style: none; display: flex; flex-direction: column; gap: var(--space-2); }
+  footer ul a:hover { color: var(--fg-dark-mode); }
+  footer .meta {
+    display: flex; justify-content: space-between;
+    padding-top: var(--space-5); border-top: 1px solid #2a2a2a;
+    font-size: 12px;
+  }
+
+  /* zoom lightbox — generic for images and videos */
+  [data-lb-trigger] { cursor: zoom-in; }
+  .lightbox {
+    position: fixed; inset: 0;
+    z-index: 300;
+    display: flex; align-items: center; justify-content: center;
+    padding: 5vh 4vw;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .lightbox.is-open { opacity: 1; pointer-events: auto; }
+  .lightbox-backdrop {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .lightbox-close {
+    position: absolute; top: 24px; right: 24px;
+    z-index: 2;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.22);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.15s;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .lightbox-close:hover {
+    background: rgba(255,255,255,0.22);
+    transform: scale(1.06);
+  }
+  .lightbox-content {
+    position: relative;
+    max-width: calc(100vw - 80px);
+    max-height: calc(100vh - 80px);
+    display: flex; align-items: center; justify-content: center;
+    transform: scale(0.96);
+    transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .lightbox.is-open .lightbox-content { transform: scale(1); }
+  .lightbox-content img,
+  .lightbox-content video {
+    max-width: 100%;
+    max-height: calc(100vh - 80px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    border-radius: 12px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+  }
+  body.lightbox-open { overflow: hidden; }
+
+  /* showcase modal — lightbox for project deep-dive */
+  .sc-modal {
+    position: fixed; inset: 0;
+    z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+    padding: 5vh 4vw;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .sc-modal.is-open { opacity: 1; pointer-events: auto; }
+  .sc-modal-backdrop {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.72);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .sc-modal-dialog {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    max-height: 90vh;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    transform: scale(0.96);
+    transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    display: flex; flex-direction: column;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.45);
+  }
+  .sc-modal.is-open .sc-modal-dialog { transform: scale(1); }
+  .sc-modal-close {
+    position: absolute; top: var(--space-4); right: var(--space-4);
+    z-index: 2;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.92);
+    color: #141414;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: background 0.15s, transform 0.15s;
+  }
+  .sc-modal-close:hover { background: #fff; transform: scale(1.05); }
+  .sc-modal-body {
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  .sc-modal-hero-media {
+    aspect-ratio: 16 / 9;
+    background:
+      linear-gradient(135deg, rgba(51,88,212,0.22), rgba(0,0,0,0.9)),
+      var(--surface-dark);
+    color: rgba(255,255,255,0.45);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--ff-body);
+    font-size: 13px;
+    letter-spacing: -0.16px;
+    overflow: hidden;
+  }
+  .sc-modal-hero-media img,
+  .sc-modal-hero-media video {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .sc-modal-subhead {
+    font-family: var(--ff-display);
+    font-size: clamp(18px, 1.7vw, 22px);
+    line-height: 1.42;
+    color: var(--fg-light-mode);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .sc-modal-media-placeholder {
+    color: rgba(255,255,255,0.55);
+  }
+  .sc-modal-placeholder-label {
+    font-family: var(--ff-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+  }
+  .sc-modal-video {
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+  }
+  .sc-modal-video iframe {
+    width: 100%; height: 100%; border: 0; display: block;
+  }
+  .sc-modal-video-link {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+  }
+  .sc-modal-video-link:hover { transform: translateY(-2px); }
+  .sc-modal-video-link img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: opacity 0.2s;
+  }
+  .sc-modal-video-link:hover img { opacity: 0.88; }
+  .sc-modal-video-play {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.96);
+    color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    padding-left: 5px; /* sub-token optical alignment for play glyph */
+    transition: transform 0.2s, background 0.2s;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+  }
+  .sc-modal-video-link:hover .sc-modal-video-play {
+    transform: translate(-50%, -50%) scale(1.06);
+    background: #fff;
+  }
+  .sc-modal-figure { margin: 0; }
+  .sc-modal-figure figcaption {
+    margin-top: var(--space-3);
+    font-size: 13px;
+    color: var(--muted-light);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .sc-modal-ctas {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    padding-top: var(--space-1);
+  }
+  .sc-modal-gallery-grid {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+  }
+  .sc-modal-gallery-grid::-webkit-scrollbar { height: 8px; }
+  .sc-modal-gallery-grid::-webkit-scrollbar-track { background: transparent; }
+  .sc-modal-gallery-grid::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.15);
+    border-radius: 4px;
+  }
+  .sc-modal-gallery-grid::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,0,0,0.3);
+  }
+  .sc-modal-gallery-grid > .sc-modal-figure {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    margin: 0;
+    min-width: 0;
+  }
+  .sc-modal-gallery-grid .sc-modal-media {
+    aspect-ratio: auto;
+    height: 540px;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sc-modal-gallery-grid .sc-modal-media img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+  .sc-modal-gallery-dots {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  .sc-modal-gallery-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.2);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .sc-modal-gallery-dot:hover { background: rgba(0,0,0,0.35); }
+  .sc-modal-gallery-dot.is-active {
+    background: var(--accent);
+    transform: scale(1.3);
+  }
+  @media (max-width: 720px) {
+    .sc-modal-gallery-grid .sc-modal-media { height: 400px; }
+  }
+  .sc-modal-tieback {
+    font-family: var(--ff-body);
+    font-size: 13px;
+    color: var(--accent);
+    font-style: italic;
+    line-height: 1.5;
+    padding: var(--space-3) var(--space-4);
+    border-left: 2px solid var(--accent);
+    background: rgba(51, 88, 212, 0.06);
+    border-radius: 0 6px 6px 0;
+    margin: 0;
+  }
+  .sc-modal-avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background:
+      linear-gradient(135deg, rgba(51,88,212,0.2), rgba(0,0,0,0.9)),
+      var(--surface-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.55);
+    font-family: var(--ff-body);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-align: center;
+    padding: var(--space-2);
+    margin: 0;
+  }
+  .showcase-thumb img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .sc-modal-meta {
+    padding: var(--space-6) var(--space-8) var(--space-5);
+    border-bottom: 1px solid #ebebeb;
+  }
+  .sc-modal-eyebrow {
+    font-family: var(--ff-body);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: var(--space-3);
+  }
+  .sc-modal-title {
+    font-family: var(--ff-display);
+    font-size: clamp(28px, 3vw, 40px);
+    line-height: 1.08;
+    letter-spacing: -0.012em;
+    margin-bottom: var(--space-2);
+    font-weight: 500;
+    color: var(--fg-light-mode);
+  }
+  .sc-modal-dev {
+    color: var(--muted-light);
+    font-size: 15px;
+  }
+  .sc-modal-content {
+    padding: var(--space-7) var(--space-8) var(--space-8);
+    display: flex; flex-direction: column;
+    gap: var(--space-7);
+    max-width: 880px;
+  }
+  .sc-modal-content h3 {
+    font-family: var(--ff-display);
+    font-size: 22px; font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: var(--space-3);
+    letter-spacing: -0.01em;
+  }
+  .sc-modal-content p {
+    font-size: 16px; line-height: 1.62;
+    color: var(--muted-light);
+    margin-bottom: var(--space-3);
+  }
+  .sc-modal-content p:last-child { margin-bottom: 0; }
+  .sc-modal-media {
+    aspect-ratio: 16 / 9;
+    background:
+      linear-gradient(135deg, rgba(51,88,212,0.18), rgba(0,0,0,0.9)),
+      var(--surface-dark);
+    border-radius: 12px;
+    overflow: hidden;
+    color: rgba(255,255,255,0.45);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+  }
+  .sc-modal-media video,
+  .sc-modal-media img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .sc-modal-media-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+  .sc-modal-quote {
+    padding: var(--space-5) var(--space-5);
+    border-left: 3px solid var(--accent);
+    background: #f5f5f5;
+    border-radius: 4px;
+    font-family: var(--ff-display);
+    font-size: 20px;
+    line-height: 1.45;
+    color: var(--fg-light-mode);
+    letter-spacing: -0.01em;
+  }
+  .sc-modal-quote cite {
+    display: block;
+    margin-top: var(--space-3);
+    font-family: var(--ff-body);
+    font-size: 13px;
+    color: var(--muted-light);
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  body.sc-modal-open { overflow: hidden; }
+
+  @media (max-width: 880px) {
+    .sc-modal { padding: 0; }
+    .sc-modal-dialog { border-radius: 0; max-height: 100vh; }
+    .sc-modal-meta { padding: var(--space-8) var(--space-5) var(--space-4); }
+    .sc-modal-content { padding: var(--space-6) var(--space-5) var(--space-7); gap: var(--space-6); }
+    .sc-modal-media-grid { grid-template-columns: 1fr; }
+    .sc-modal-close { top: var(--space-4); right: var(--space-4); }
+  }
+
+  /* responsive */
+  @media (max-width: 1100px) {
+    .steps-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 880px) {
+    .hero-stats,
+    .steps-grid,
+    .showcase-grid { grid-template-columns: 1fr; }
+    .demo { grid-template-columns: 1fr; gap: var(--space-5); padding: var(--space-7) 0; }
+    .demo.reverse > .demo-media,
+    .demo.reverse > .demo-stat { order: 0; }
+    .nav-toggle { display: flex; }
+    .nav-links {
+      position: fixed;
+      top: 48px; left: 0; right: 0;
+      flex-direction: column;
+      background: var(--bg);
+      padding: var(--space-3) var(--space-5) var(--space-5);
+      gap: 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      transform: translateY(-8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+    body.nav-open .nav-links {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .nav-links a {
+      padding: var(--space-3) 0;
+      font-size: 17px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background-image: none;
+    }
+    .nav-links a:last-child { border-bottom: none; }
+    .hero { min-height: 620px; padding: var(--space-8) 0 var(--space-7); align-items: center; }
+    .cta-band { padding: var(--space-8) 0; }
+    footer .grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="container">
+    <div class="nav-left">
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-logo"><span class="cube"></span> Unity <span style="color:var(--muted-dark);font-weight:400;">AI</span></div>
+      <nav class="nav-links" id="nav-menu">
+        <a href="#how">How it works</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+    <div class="nav-right">
+      <a href="#" class="btn btn-chip">Download Unity</a>
+      <a href="#try" class="btn btn-primary">Try it now</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <video class="hero-video"
+         autoplay muted loop playsinline preload="auto"
+         poster="hero-poster.webp"
+         fetchpriority="high"
+         aria-hidden="true">
+    <source src="hero-demo.webm" type="video/webm">
+    <source src="hero-demo.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container hero-content">
+    <div class="hero-content-inner">
+      <h1>
+        <span class="beat">Deep context on your project.</span>
+        <span class="beat">Engine-authoritative execution.</span>
+        <span class="beat">Native to the Editor, built by <span class="accent">Unity</span>.</span>
+      </h1>
+      <p class="hero-sub">
+        Unity AI is the deepest integration possible with the Unity Editor. It understands the full context of your open project, applies the best practices the engine itself enforces, and delivers the playable result you expect.
+      </p>
+      <div class="hero-ctas">
+        <a href="#try" class="btn btn-primary btn-lg">Try it now →</a>
+        <a href="#showcase" class="btn btn-ghost-dark btn-lg">See who's building</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="num">2.6×</div>
+          <div class="label">better at pinpointing the right context, vs. previous GPT-based product.</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">30%</div>
+          <div class="label">more tasks finished end-to-end vs. state-of-the-art general AI model.</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">100%</div>
+          <div class="label">compile-validated. Every edit runs through Unity's native compiler before it reaches your project.</div>
+        </div>
+      </div>
+      <p class="hero-footnote">Reference-finding and task-completion numbers based on internal Unity benchmarks.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY UNITY AI IS BETTER -->
+<section id="why" class="block alt">
+  <div class="container">
+    <div class="section-head">
+      <h2>Why Unity AI is better.</h2>
+      <p>Grounded in how Unity AI is built.</p>
+    </div>
+
+    <div class="why-simple-grid">
+      <article class="why-simple-card">
+        <div class="why-simple-num">01</div>
+        <h3>Knows Unity from the inside.</h3>
+        <ul>
+          <li><strong>Version-matched</strong> to your Editor: API knowledge ships on Unity's release train.</li>
+          <li>Reads your project as a <strong>live dependency graph</strong>. Solves <strong>8× more tasks correctly</strong>.</li>
+          <li>Trained on Unity's internal corpus: engine source, support tickets, <strong>20+ years of best practice</strong>.</li>
+        </ul>
+      </article>
+
+      <article class="why-simple-card">
+        <div class="why-simple-num">02</div>
+        <h3>Executes through native Unity.</h3>
+        <ul>
+          <li>Skills and subagents built by <strong>Unity's own engineers</strong>. <strong>37% better</strong> task completion vs. general AI.</li>
+          <li>Uses Unity's <strong>built-in tools</strong> and project map. Half the steps, full dependency tracking.</li>
+          <li><strong>Every edit runs through the compiler</strong> before it reaches your project. Failures stay in the loop, not your project.</li>
+        </ul>
+      </article>
+
+      <article class="why-simple-card">
+        <div class="why-simple-num">03</div>
+        <h3>Built as your teammate.</h3>
+        <ul>
+          <li>Plan Mode turns rough requests into plans you approve. <strong>17%+ higher success rate</strong> than one-shot agents.</li>
+          <li><strong>Context compression</strong> keeps project state alive across long tasks. No mid-task amnesia.</li>
+          <li>Routes long-horizon work to <strong>specialist subagents</strong>: context collector, developer, designer, and more. <strong>29% more tasks done</strong>, fewer regressions.</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES 01 · Start from a rough idea -->
+<section id="capabilities" class="block light">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Discuss, plan, execute</span>
+      <h2>Start from a rough idea.</h2>
+      <p>Any concept, design doc, or "what if" becomes a plan you approve. Better yet, we build it for you.</p>
+    </div>
+
+    <div class="demo reverse">
+      <div class="demo-copy">
+        <div class="demo-sub-block reveal">
+          <h3 class="demo-sub">We know your games.</h3>
+          <ul>
+            <li>Unity AI reads your project and your intent, then returns a phased, dependency-ordered plan mapped against what already exists.</li>
+          </ul>
+        </div>
+        <div class="demo-sub-block reveal" data-delay="1">
+          <h3 class="demo-sub">We build what you approved.</h3>
+          <ul>
+            <li>Nothing executes until the plan has your sign-off. Each step verifies before the next. Failed steps auto-recover.</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="demo-video-figure">
+        <div class="demo-video" data-lb-trigger aria-label="Enlarge Plan Mode demo">
+          <video muted loop playsinline preload="none" data-lazy-video aria-label="Plan Mode demo: Unity AI turning a rough request into a reviewable plan.">
+            <source data-src="assets/plan-mode-demo.mp4" type="video/mp4">
+          </video>
+        </div>
+        <figcaption class="demo-video-caption">An NPC, added end to end by Unity AI.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES 02 · Start from something visual -->
+<section class="block alt">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Visual in. Scene out.</span>
+      <h2>Start from something visual.</h2>
+      <p>No thousand-prompt setup. Drop in any GameObject, a screenshot with annotations, or a reference image.</p>
+    </div>
+
+    <div class="demo">
+      <div class="demo-copy">
+        <div class="demo-sub-block reveal">
+          <h3 class="demo-sub">We see what you see.</h3>
+          <ul>
+            <li>Unity AI accepts almost <strong>anything inside your project</strong> as context, then analyzes your project's logic, dependencies, and your intent automatically.</li>
+          </ul>
+        </div>
+        <div class="demo-sub-block reveal" data-delay="1">
+          <h3 class="demo-sub">From visual to playable.</h3>
+          <ul>
+            <li><strong>Blockout from image or text.</strong> Unity AI builds a primitives-based Scene so you can see the layout right away.</li>
+            <li><strong>3D objects from image.</strong> Unity AI extracts objects from the image and builds them as style-matched 3D assets.</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="demo-video-figure">
+        <div class="demo-video" data-lb-trigger aria-label="Enlarge Image to Scene demo">
+          <video muted loop playsinline preload="none" data-lazy-video aria-label="Image to Scene demo: Unity AI turning a reference image into a primitives-based blockout Scene.">
+            <source data-src="assets/image-to-scene.mp4" type="video/mp4">
+          </video>
+        </div>
+        <figcaption class="demo-video-caption">A Scene, generated from an image by Unity AI.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES 03 · Start from a problem -->
+<section class="block light">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Every technical question, Unity AI.</span>
+      <h2>Start from a problem.</h2>
+      <p>Stuck on an error, a regression, or a "can I do this?" Unity AI answers.</p>
+    </div>
+
+    <div class="demo reverse">
+      <div class="demo-copy">
+        <div class="demo-sub-block reveal">
+          <h3 class="demo-sub">We read Unity like a developer.</h3>
+          <ul>
+            <li>Unity AI knows the current API surface for your Editor, reads the Console and Scene graph, and parses Profiler captures at sample resolution. <strong>No text dump to you.</strong></li>
+          </ul>
+        </div>
+        <div class="demo-sub-block reveal" data-delay="1">
+          <h3 class="demo-sub">Feasibility, debugging, performance.</h3>
+          <ul>
+            <li><strong>"Can I do this?"</strong> Feasibility and API discovery for your Editor version.</li>
+            <li><strong>"Why is this happening?"</strong> Walks the stack through symbol map and names the specific GameObject, serialized field, or Prefab variant responsible.</li>
+            <li><strong>"Why is this slow?"</strong> Identifies the subsystem driving cost, and proposes the smallest change that moves the number.</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="demo-video-figure">
+        <div class="demo-video" data-lb-trigger aria-label="Enlarge debugging demo">
+          <video muted loop playsinline preload="none" data-lazy-video aria-label="Debugging demo: Unity AI walking the stack and naming the responsible GameObject.">
+            <source data-src="assets/debug-demo.mp4" type="video/mp4">
+          </video>
+        </div>
+        <figcaption class="demo-video-caption">A bug, fixed by a click. No long descriptions.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES 04 · Stay in control -->
+<section class="block alt">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Reversible, open, portable</span>
+      <h2>Stay in control, end to end.</h2>
+      <p>Every action reversible. Every model call yours. Every tool callable from outside Unity.</p>
+    </div>
+
+    <div class="demo">
+      <div class="demo-copy">
+        <div class="demo-sub-block reveal">
+          <h3 class="demo-sub">Your changes, your models, your IDE.</h3>
+          <ul>
+            <li><strong>Checkpoint.</strong> Revert any AI change. Nothing to worry about.</li>
+            <li><strong>AI Gateway.</strong> Bring your own AI. Plug in your favorite base model, billed to your own account.</li>
+            <li><strong>Unity MCP.</strong> Drive from your IDE. 28 Editor tools callable from your favorite IDE.</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="demo-video-figure">
+        <div class="demo-image">
+          <img src="assets/gateway.webp" alt="Unity AI Build with Unity panel showing the model selector with the Add agent option highlighted." loading="lazy" decoding="async" />
+        </div>
+        <figcaption class="demo-video-caption">An agent, controlled by you.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE -->
+<section id="showcase" class="block light">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Made with Unity AI</span>
+      <h2>Already ahead with Unity AI.</h2>
+      <p>900+ studios and solo devs subscribed to Unity AI.</p>
+    </div>
+    <div class="showcase-grid">
+      <article class="showcase-card" data-sc-open="showcaseModal" aria-haspopup="dialog">
+        <div class="showcase-thumb">
+          <img src="assets/cold-seagull/gameplay.webp" alt="Cold Seagull gameplay: two seagulls on a beach at sunset with a hand of cards." loading="lazy" decoding="async" />
+        </div>
+        <div class="showcase-meta">
+          <div class="showcase-tag">Roguelike · Solo Developer</div>
+          <div class="showcase-title">Cold Seagull</div>
+          <div class="showcase-dev">Myrmex Studios</div>
+          <p class="showcase-quote">"Unity AI built me a tool. Two days became an hour."</p>
+        </div>
+      </article>
+      <article class="showcase-card" data-sc-open="survivalModal" aria-haspopup="dialog">
+        <div class="showcase-thumb">
+          <img src="assets/survival-denied/shot-06.webp" alt="Survival Denied VR gameplay: dual pistols aimed at a zombie in a low-poly desert." loading="lazy" decoding="async" />
+        </div>
+        <div class="showcase-meta">
+          <div class="showcase-tag">VR Roguelite · 2 Person Studio</div>
+          <div class="showcase-title">Survival Denied</div>
+          <div class="showcase-dev">What Does This Button Do LLC</div>
+          <p class="showcase-quote">"Unity AI is a happy story for me. It enables me to go forward."</p>
+        </div>
+      </article>
+      <a href="#try" class="showcase-card" style="display: block; color: inherit; text-decoration: none;">
+        <div class="showcase-thumb">
+          <span style="font-family: var(--ff-display); font-weight: 500; font-size: 22px; color: rgba(255,255,255,0.92); letter-spacing: -0.01em; padding: 0 var(--space-5); text-align: center;">Your studio here →</span>
+        </div>
+        <div class="showcase-meta">
+          <div class="showcase-tag">Open Beta on Unity 6</div>
+          <div class="showcase-title">This could be you.</div>
+          <div class="showcase-dev">Building with Unity AI?</div>
+          <p class="showcase-quote">"We'd love to feature your project. Try Unity AI and tell us what you make."</p>
+        </div>
+      </a>
+    </div>
+    <div class="showcase-cta-row">
+      <a href="#try" class="btn btn-ghost-light btn-lg">Try it out →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section id="try" class="cta-band">
+  <div class="container">
+    <h2>Start building with Unity AI today.</h2>
+    <p>Free on Unity 6 and up. 1,000 credits to start. Included with Unity Pro, Enterprise, and Industry.</p>
+    <div class="cta-row">
+      <a href="#" class="btn btn-primary btn-lg">Install the Assistant package →</a>
+      <a href="#" class="btn btn-ghost-dark btn-lg">See plans and pricing</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="block light">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Frequently asked</span>
+      <h2>Answers to the questions we hear most.</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">What Unity versions does Unity AI work with?</div>
+        <div class="faq-a"><p>Unity 6.0 and above. Some features require specific 6.x minor versions, see docs.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How do I get started?</div>
+        <div class="faq-a"><p>Install the Assistant package from Package Manager. Unity Personal starts with a 1,000 credit free trial, credit card required. Unity Pro, Enterprise, and Industry seats include Unity AI credits already.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I bring my own AI subscription?</div>
+        <div class="faq-a"><p>Yes. AI Gateway in Project Settings connects Claude, GPT, or other supported agents through your own key.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is my project data used to train models?</div>
+        <div class="faq-a"><p>No, not by default. Developer Data sharing is off unless you opt in. Your runtime binary and media assets (images, meshes, audio) are never used for training.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How is Unity AI different from a general coding agent?</div>
+        <div class="faq-a"><p>General coding agents read text files. Unity AI reads Scene state, executes Editor actions, and verifies in Play Mode.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I roll back Unity AI changes?</div>
+        <div class="faq-a"><p>Yes. Every action goes through Unity's undo stack, plus checkpoints for code and assets. Generated assets are auto-tagged for audit and replacement.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do I need a third-party MCP server?</div>
+        <div class="faq-a"><p>No. Unity AI is native to the Editor. Optional MCP extensions connect Blender, Git, or custom tools. Unity's MCP Server is available if you want to drive the Editor from your IDE.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="grid">
+      <div>
+        <div class="brand">Unity AI</div>
+        <p class="brand-tag">The game development agent, built inside the Unity Editor.</p>
+      </div>
+      <div>
+        <h5>Product</h5>
+        <ul>
+          <li><a href="#">Assistant</a></li>
+          <li><a href="#">MCP Server</a></li>
+          <li><a href="#">AI Gateway</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="#">Docs</a></li>
+          <li><a href="#">Changelog</a></li>
+          <li><a href="#">Tutorials</a></li>
+          <li><a href="#">Community</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Plans</h5>
+        <ul>
+          <li><a href="#">Personal</a></li>
+          <li><a href="#">Pro</a></li>
+          <li><a href="#">Enterprise</a></li>
+          <li><a href="#">Industry</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Support</h5>
+        <ul>
+          <li><a href="#">Help center</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Status</a></li>
+          <li><a href="#">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="meta">
+      <span>© 2026 Unity Technologies. Open Beta.</span>
+      <span></span>
+    </div>
+  </div>
+</footer>
+
+<!-- SHOWCASE MODAL (template — content to be filled) -->
+<div class="sc-modal" id="showcaseModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="scModalTitle">
+  <div class="sc-modal-backdrop" data-sc-dismiss></div>
+  <div class="sc-modal-dialog" role="document">
+    <button class="sc-modal-close" aria-label="Close" data-sc-dismiss>
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M4 4L16 16M16 4L4 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <div class="sc-modal-body">
+      <div class="sc-modal-hero-media" data-lb-trigger aria-label="Enlarge Cold Seagull gameplay video">
+        <video muted loop playsinline preload="none" data-lazy-video aria-label="Cold Seagull gameplay: cards, dialogue, and a colony under a sunset sky.">
+          <source data-src="assets/cold-seagull/gameplay-video.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <div class="sc-modal-meta">
+        <div class="sc-modal-eyebrow">In the loop · Case study</div>
+        <h2 class="sc-modal-title" id="scModalTitle">Building Cold Seagull with Unity AI in the loop</h2>
+        <div class="sc-modal-dev">Myrmex Studios</div>
+      </div>
+
+      <div class="sc-modal-content">
+        <p class="sc-modal-subhead">A new seagull arrives in the territory. The hierarchies are set. The alliances formed. The rivalries already drawn. Brute force is not the way up. The real weapons are words, gestures, and shared meals. Every alliance redefines the balance of the flock.</p>
+
+        <blockquote class="sc-modal-quote">
+          "It's a goofy Game. A compliment is a mechanic. An insult is a strategy. The food you share is manipulation."
+          <cite>Myrmex Studios</cite>
+        </blockquote>
+
+        <section>
+          <p>This is Cold Seagull, a procedural narrative roguelike deckbuilder where battles are won with words, not strength. The first demo is targeting Steam Next Fest in the near future. Behind it is a solo developer at Myrmex Studios. And for the last month, Unity AI.</p>
+        </section>
+
+        <figure class="sc-modal-figure" data-lb-trigger aria-label="Enlarge Will card screenshot">
+          <div class="sc-modal-media">
+            <img src="assets/cold-seagull/game-will.webp" alt="Cold Seagull Will card detail: resist mechanics, social damage, and links to other cards." loading="lazy" decoding="async" />
+          </div>
+          <figcaption>A Will card. Resist mechanics, social damage, and links to other cards in the deck.</figcaption>
+        </figure>
+
+        <section>
+          <h3>A solo studio building a system heavy game.</h3>
+          <p>Myrmex brings a software engineering background to game development. Cold Seagull is, in part, where that work lives now.</p>
+          <p>The game runs on a procedural narrative engine the studio built over eight months. A custom domain-specific language authors the branching stories that run on top of it. Around those two pieces sit a card editor, a narrative management tool, and, in the studio's words, "tons of custom Unity tools."</p>
+          <p>That is the project Unity AI walked into a month ago.</p>
+        </section>
+
+        <section>
+          <h3>Switching to Unity AI.</h3>
+          <p>Myrmex had spent the last year cycling through general-purpose AI assistants. They worked at first, but at the scale Cold Seagull required, a monthly token quota could disappear in a single day. More than cost, the studio needed an assistant that could hold the game's interconnected systems across tasks without rebuilding context every time. None of them did.</p>
+          <p>Switching to Unity AI changed the studio's daily workflow immediately.</p>
+        </section>
+
+        <blockquote class="sc-modal-quote">
+          "Unity AI knows it's a Unity project. It knows the scope, understands the code, has access to the architecture."
+          <cite>Myrmex Studios</cite>
+        </blockquote>
+
+        <section>
+          <p>Unity AI is the AI assistant built into Unity. It runs inside the Unity Editor. Every task starts with the project already open: scenes, prefabs, inspector state, codebase, all in context. A general AI assistant has to reach across tools to handle that kind of context. Unity AI treats it as the ground state.</p>
+        </section>
+
+        <section>
+          <h3>Building a debugging tool, end to end.</h3>
+          <p>One real example of the workflow: the studio needed a debugging tool that would hover over any agent in Cold Seagull's colony and surface the agent's name, temperament, stance toward the player, and live state. Useful for development. Not trivial to build, given an existing tooltip system already in production for cards.</p>
+          <p>The studio described what it wanted, set the constraints, and asked Unity AI for a plan first. A general AI assistant tends to lose the thread on a request this layered. Unity AI stayed on the goal, held the constraints across the whole task, and answered with structure.</p>
+        </section>
+
+        <figure class="sc-modal-figure" data-lb-trigger aria-label="Enlarge talking-to-Unity-AI video">
+          <div class="sc-modal-media">
+            <video muted loop playsinline preload="none" data-lazy-video aria-label="Cold Seagull developer talking to Unity AI">
+              <source data-src="assets/cold-seagull/talking-to-aia.mp4" type="video/mp4">
+            </video>
+          </div>
+          <figcaption>Unity AI takes long and complicated tasks.</figcaption>
+        </figure>
+
+        <section>
+          <p>Unity AI broke the work into discrete, ordered steps, each one scoped against the existing system, each one preserving what was already working.</p>
+        </section>
+
+        <figure class="sc-modal-figure" data-lb-trigger aria-label="Enlarge Plan Mode screenshot">
+          <div class="sc-modal-media">
+            <img src="assets/cold-seagull/plans.webp" alt="Unity AI Plan Mode showing nine ordered steps for a tooltip refactor." loading="lazy" decoding="async" />
+          </div>
+          <figcaption>Unity AI breaking the tooltip refactor into nine ordered steps.</figcaption>
+        </figure>
+
+        <section>
+          <p>The studio reviewed the plan, approved it, and let Unity AI execute. The debugging tooltip now lives in the Editor.</p>
+          <p>End to end. One conversation, one plan, one execution. The kind of multi-step refactor that normally splinters across a week, delivered seamlessly inside the workflow.</p>
+          <p>The same pattern shows up in smaller pieces all over the project. When the studio needed a loading screen for the card chart, Unity AI built the prefab, wired the inspector references, and dropped it into the scene. When the studio was driving animation transitions from sound effects in the DSL, Unity AI created the animator controller, completed the function, associated the timings, and left the existing pipeline intact. When collaborators without a Unity-capable machine needed a way to contribute to Cold Seagull, Unity AI built a standalone Photino desktop app in C# in a single working session, respecting the studio's existing conventions.</p>
+        </section>
+
+        <blockquote class="sc-modal-quote">
+          "Unity AI saw my architecture and created the controller, completed the function, associated them at the correct moment, and left my pipeline intact. That's what differentiates it: it knows the environment."
+          <cite>Myrmex Studios</cite>
+        </blockquote>
+
+        <figure class="sc-modal-figure" data-lb-trigger aria-label="Enlarge tooltip video">
+          <div class="sc-modal-media">
+            <video muted loop playsinline preload="none" data-lazy-video aria-label="Cold Seagull tooltip system in action">
+              <source data-src="assets/cold-seagull/tooltip.mp4" type="video/mp4">
+            </video>
+          </div>
+          <figcaption>The tooltip tool is built by Unity AI end to end.</figcaption>
+        </figure>
+
+        <section>
+          <h3>Quick moves for daily debugging.</h3>
+          <p>Daily Unity development is a thousand small moves. Drop an object into a window to inspect. Print a value to the console. Trace a bug back to the line that broke it. Each move costs a small piece of attention, and across a day, the cost adds up.</p>
+          <p>Unity AI lives inside that workflow. The studio can right-click an object in the scene and drop it directly into Unity AI's context. Right-click a line of code and Unity AI inserts a console log at that line. Small gestures, but they hold a debugging session together.</p>
+        </section>
+
+        <figure class="sc-modal-figure" data-lb-trigger aria-label="Enlarge right-click add video">
+          <div class="sc-modal-media">
+            <video muted loop playsinline preload="none" data-lazy-video aria-label="Right click to add objects to Unity AI context">
+              <source data-src="assets/cold-seagull/right-click-add.mp4" type="video/mp4">
+            </video>
+          </div>
+          <figcaption>Right-click an error in the scene and drop it directly into Unity AI.</figcaption>
+        </figure>
+
+        <section>
+          <h3>Looking ahead.</h3>
+          <p>As Cold Seagull moves toward its first demo, Unity AI continues to be part of the daily work. It is not replacing the studio's creative direction, its systems thinking, or its hands-on craft. It is helping keep momentum across the many pieces of work a solo developer has to carry.</p>
+        </section>
+
+        <blockquote class="sc-modal-quote">
+          "For the time being, you're saving my life... Unity AI is going to be my main tool."
+          <cite>Myrmex Studios</cite>
+        </blockquote>
+
+        <figure class="sc-modal-figure" data-lb-trigger aria-label="Enlarge Cold Seagull concept art">
+          <div class="sc-modal-media">
+            <img src="assets/cold-seagull/art-coastal-revetment.webp" alt="Cold Seagull concept art: coastal sunset landscape with bench, lamp post, and distant ruined architecture." loading="lazy" decoding="async" />
+          </div>
+          <figcaption>Where Cold Seagull is going.</figcaption>
+        </figure>
+
+        <div class="sc-modal-ctas">
+          <a href="#try" class="btn btn-primary btn-lg" data-sc-dismiss>Try Unity AI →</a>
+          <a href="https://tmyrm.itch.io/cold-seagull" class="btn btn-ghost-light btn-lg" target="_blank" rel="noopener">Play Cold Seagull free</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GENERIC LIGHTBOX for click-to-enlarge images and videos -->
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Enlarged media">
+  <div class="lightbox-backdrop" data-lb-dismiss></div>
+  <button class="lightbox-close" aria-label="Close" data-lb-dismiss>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M5 5L19 19M19 5L5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <div class="lightbox-content" id="lightboxContent"></div>
+</div>
+
+<!-- SURVIVAL DENIED MODAL -->
+<div class="sc-modal" id="survivalModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="sdModalTitle">
+  <div class="sc-modal-backdrop" data-sc-dismiss></div>
+  <div class="sc-modal-dialog" role="document">
+    <button class="sc-modal-close" aria-label="Close" data-sc-dismiss>
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M4 4L16 16M16 4L4 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <div class="sc-modal-body">
+      <div class="sc-modal-hero-media">
+        <img src="assets/survival-denied/shot-06.webp" alt="Survival Denied VR gameplay: dual pistols aimed at a glowing-eyed zombie in a low-poly desert at dusk." loading="lazy" decoding="async" />
+      </div>
+
+      <div class="sc-modal-meta">
+        <div class="sc-modal-eyebrow">In the loop · Case study</div>
+        <h2 class="sc-modal-title" id="sdModalTitle">Building Survival Denied with Unity AI in the loop</h2>
+        <div class="sc-modal-dev">What Does This Button Do LLC</div>
+      </div>
+
+      <div class="sc-modal-content">
+        <p class="sc-modal-subhead">A child sits in the Unity Editor. Next to her, her brother is in VR, gun raised, zombies closing in. She drags a power-up from the project folder into the scene. Drops a weapon at his feet. Tells him where to aim.</p>
+
+        <section>
+          <h3>When a game designer takes the programmer role.</h3>
+          <p>Survival Denied is a VR action roguelite, live on Steam Early Access and heading for a 1.0 launch this year.</p>
+          <p>Dr.Zed has been building it with his brother, an experienced indie programmer. Dr.Zed brings the game design instincts, the 3D, the world. More than a decade in Unity. 3ds Max since 1999. His brother handles the code.</p>
+          <p>But Dr.Zed wanted to contribute more himself. He wanted the game in his head to land on screen on his own clock, without waiting for his brother to free up. He can read code fluently. Writing efficient code has always been the wall.</p>
+        </section>
+
+        <blockquote class="sc-modal-quote">
+          "I can understand the code I see. But I can't write efficient code. Unity AI opened a new way for me."
+          <cite>Dr.Zed</cite>
+        </blockquote>
+
+        <section>
+          <p><strong>For the last several months, Unity AI has been his daily driver, running in the Editor where the rest of the work already lives.</strong></p>
+        </section>
+
+        <div class="sc-modal-media-grid">
+          <figure class="sc-modal-figure" data-lb-trigger aria-label="Enlarge outdoor desert gameplay screenshot">
+            <div class="sc-modal-media">
+              <img src="assets/survival-denied/shot-06.webp" alt="Survival Denied outdoor gameplay: dual pistols aimed at zombies in a low-poly desert." loading="lazy" decoding="async" />
+            </div>
+          </figure>
+          <figure class="sc-modal-figure" data-lb-trigger aria-label="Enlarge urban neon-lit gameplay screenshot">
+            <div class="sc-modal-media">
+              <img src="assets/survival-denied/shot-02.webp" alt="Survival Denied urban gameplay: neon-lit street at sunset with zombies." loading="lazy" decoding="async" />
+            </div>
+          </figure>
+        </div>
+
+        <section>
+          <h3>Refactoring at scale.</h3>
+          <p>Survival Denied had outgrown its early code. Spawned objects were everywhere, and instantiation needed to move to object pooling across weapons, pickups, and effects.</p>
+          <p>This is the kind of refactor that can freeze a small team for a week. Miss one reference and pickups break. Miss another and weapon swap loses state.</p>
+          <p>Dr.Zed handed the pass to Unity AI, then walked the edges: the weapon that vanished when picked up a second time, null refs that surfaced after the swap, small behavioral drift across a handful of systems. Each broken piece became its own chat, its own focused fix.</p>
+        </section>
+
+        <blockquote class="sc-modal-quote">
+          "Unity AI is like a teammate. My habit is to separate individual items into two or three different chats, and it delivers for me within a few iterations."
+          <cite>Dr.Zed</cite>
+        </blockquote>
+
+        <section>
+          <p>Dr.Zed kept moving forward.</p>
+        </section>
+
+        <section>
+          <h3>The Editor is the input.</h3>
+          <p>The way Dr.Zed talks to Unity AI now is mostly by dragging things in. Prefabs, scripts, scene objects: straight from the Project folder into the chat window. Drag, drop, then describe what to do with them. No script hunting. No copy-pasting filenames. No describing "that thing in the inspector."</p>
+          <p>For Dr.Zed, drag-and-drop has become the daily norm for talking to Unity AI. It is faster than typing. It is more precise than describing. It is convenient enough that he reaches for it without thinking.</p>
+        </section>
+
+        <figure class="sc-modal-figure" data-lb-trigger aria-label="Enlarge drag-and-drop video">
+          <div class="sc-modal-media">
+            <video muted loop playsinline preload="none" data-lazy-video aria-label="Drag and drop assets into Unity AI chat">
+              <source data-src="assets/survival-denied/drag-and-drop.mp4" type="video/mp4">
+            </video>
+          </div>
+          <figcaption>Drag-and-drop has become the daily norm for Dr.Zed to talk to Unity AI.</figcaption>
+        </figure>
+
+        <section>
+          <h3>Where intent meets implementation.</h3>
+          <p>A recent example. Two zombies die near each other. Both drop weapon crates. The crates explode close together, and the resulting pickups overlap. The player walks over, collects one, and the other vanishes into the same trigger. A small bug, a frustrating one.</p>
+          <p>The fix is conceptual, not a feature. Dr.Zed grabs the relevant pickup prefabs from the Project folder, drags them into the chat as context, and types the problem in plain English: when two or more crates are destroyed nearby, spawn the pickups with at least 0.5 units of space between them.</p>
+        </section>
+
+        <figure class="sc-modal-figure" data-lb-trigger aria-label="Enlarge Plan Mode walkthrough video">
+          <div class="sc-modal-media">
+            <video muted loop playsinline preload="none" data-lazy-video aria-label="Plan Mode walkthrough for pickup spacing fix">
+              <source data-src="assets/survival-denied/plan-mode.mp4" type="video/mp4">
+            </video>
+          </div>
+          <figcaption>Dr.Zed is a heavy user of Plan Mode since its roll-out.</figcaption>
+        </figure>
+
+        <section>
+          <p>Unity AI has Plan Mode for this. Plan Mode drafts the approach before touching a line of code. Dr.Zed reads it, then adds one more requirement in the feedback box: pickups must not end up inside walls, trees, or other geometry. Use raycast or navmesh.</p>
+          <p>The plan updates. He approves. Unity AI implements the fix, then verifies its own work: project compiles clean, console runs clean, bug closed.</p>
+          <p>The same workflow is how a stat editor for weapon balancing showed up one afternoon. Mid-conversation, Dr.Zed decided he needed one. A few iterations later, it existed.</p>
+        </section>
+
+        <blockquote class="sc-modal-quote">
+          "Unity AI has created this beautiful editor tool while we were having this conversation. Several back and forth of course, but I am finding ways to steer it to do what I need."
+          <cite>Dr.Zed</cite>
+        </blockquote>
+
+        <section>
+          <h3>Looking ahead.</h3>
+          <p>Survival Denied is heading toward a Release Candidate this summer, with a 1.0 launch to follow. The Beta branch on Steam is already running the new co-op mode, ragdoll physics, diegetic UI, ten new weapons, four new maps, meta-progression, and a stack of optimizations.</p>
+        </section>
+
+        <blockquote class="sc-modal-quote">
+          "The whole thing is a happy story for me. It enables me to go forward. Before, I either had to spend weeks of my time, or ask someone else to do the programming. Now I've got this little program on the side of my screen."
+          <cite>Dr.Zed</cite>
+        </blockquote>
+
+        <section>
+          <p>The tool keeps improving. So does Dr.Zed's instinct for when to lean on it. "The tool is getting better as I am learning," he says.</p>
+          <p>For a creator who came to games through design, world building, and 3D, Unity AI is the teammate that closes the coding gap. The kind of partner that lets a designer ship the game in their head, not wait for someone else to write it.</p>
+        </section>
+
+        <div class="sc-modal-ctas">
+          <a href="#try" class="btn btn-primary btn-lg" data-sc-dismiss>Try Unity AI →</a>
+          <a href="https://store.steampowered.com/app/1249890/Survival_Denied/" class="btn btn-ghost-light btn-lg" target="_blank" rel="noopener">Survival Denied on Steam</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      item.classList.toggle('open');
+    });
+  });
+
+  // Apple-style scroll reveal
+  (function () {
+    const els = document.querySelectorAll('.reveal');
+    if (!els.length) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced || !('IntersectionObserver' in window)) {
+      els.forEach(el => el.classList.add('is-visible'));
+      return;
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+
+    els.forEach(el => io.observe(el));
+  })();
+
+  // Lazy-load videos (mark with data-lazy-video, sources use data-src)
+  (function () {
+    const videos = document.querySelectorAll('video[data-lazy-video]');
+    if (!videos.length) return;
+    const load = (video) => {
+      video.querySelectorAll('source[data-src]').forEach(s => {
+        s.src = s.dataset.src;
+        s.removeAttribute('data-src');
+      });
+      video.load();
+      video.play().catch(() => {});
+    };
+    if (!('IntersectionObserver' in window)) {
+      videos.forEach(load);
+      return;
+    }
+    const vio = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          load(entry.target);
+          vio.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '400px 0px' });
+    videos.forEach(v => vio.observe(v));
+  })();
+
+  // Mobile nav toggle
+  (function () {
+    const toggle = document.querySelector('.nav-toggle');
+    if (!toggle) return;
+    const links = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => {
+      const isOpen = document.body.classList.toggle('nav-open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+    if (links) {
+      links.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          document.body.classList.remove('nav-open');
+          toggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  })();
+
+  // Gallery carousel dots — one set of dots per .sc-modal-gallery-grid, synced via IntersectionObserver
+  (function () {
+    const grids = document.querySelectorAll('.sc-modal-gallery-grid');
+    grids.forEach(grid => {
+      const figures = grid.querySelectorAll(':scope > .sc-modal-figure');
+      if (figures.length < 2) return;
+
+      const dots = document.createElement('div');
+      dots.className = 'sc-modal-gallery-dots';
+      dots.setAttribute('role', 'tablist');
+      dots.setAttribute('aria-label', 'Gallery navigation');
+
+      const dotEls = [];
+      figures.forEach((fig, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'sc-modal-gallery-dot';
+        dot.type = 'button';
+        dot.setAttribute('aria-label', `Go to image ${i + 1}`);
+        dot.addEventListener('click', () => {
+          fig.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+        });
+        dots.appendChild(dot);
+        dotEls.push(dot);
+      });
+      grid.insertAdjacentElement('afterend', dots);
+      dotEls[0].classList.add('is-active');
+
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && entry.intersectionRatio >= 0.55) {
+              const idx = Array.from(figures).indexOf(entry.target);
+              if (idx < 0) return;
+              dotEls.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+            }
+          });
+        }, { root: grid, threshold: [0.55, 0.75, 0.95] });
+        figures.forEach(f => io.observe(f));
+      }
+    });
+  })();
+
+  // Zoom lightbox — click on [data-lb-trigger] to enlarge contained img or video
+  (function () {
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox) return;
+    const content = lightbox.querySelector('#lightboxContent');
+    let lastFocused = null;
+    let pausedInlineVideo = null;
+
+    function openLightbox(sourceEl) {
+      lastFocused = document.activeElement;
+      content.innerHTML = '';
+      const srcVideo = sourceEl.querySelector('video');
+      const srcImg = sourceEl.querySelector('img');
+
+      if (srcVideo) {
+        if (!srcVideo.paused) {
+          srcVideo.pause();
+          pausedInlineVideo = srcVideo;
+        }
+        const clone = srcVideo.cloneNode(true);
+        clone.removeAttribute('data-lazy-video');
+        clone.controls = true;
+        clone.muted = false;
+        clone.autoplay = true;
+        clone.loop = true;
+        content.appendChild(clone);
+        try { clone.currentTime = 0; } catch (e) {}
+        clone.play().catch(() => {});
+      } else if (srcImg) {
+        const clone = document.createElement('img');
+        clone.src = srcImg.currentSrc || srcImg.src;
+        clone.alt = srcImg.alt || '';
+        content.appendChild(clone);
+      } else {
+        return;
+      }
+
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('lightbox-open');
+      const closeBtn = lightbox.querySelector('.lightbox-close');
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('lightbox-open');
+      setTimeout(() => { content.innerHTML = ''; }, 350);
+      if (pausedInlineVideo) {
+        pausedInlineVideo.play().catch(() => {});
+        pausedInlineVideo = null;
+      }
+      if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+    }
+
+    document.querySelectorAll('[data-lb-trigger]').forEach(el => {
+      el.setAttribute('role', 'button');
+      el.setAttribute('tabindex', '0');
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openLightbox(el);
+      });
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openLightbox(el);
+        }
+      });
+    });
+
+    lightbox.querySelectorAll('[data-lb-dismiss]').forEach(el => {
+      el.addEventListener('click', closeLightbox);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+    });
+  })();
+
+  // Showcase modals — supports multiple, triggered by [data-sc-open="modalId"]
+  (function () {
+    const modals = document.querySelectorAll('.sc-modal');
+    if (!modals.length) return;
+    let lastFocused = null;
+
+    function openModal(modal) {
+      lastFocused = document.activeElement;
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('sc-modal-open');
+      const closeBtn = modal.querySelector('.sc-modal-close');
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function closeModal(modal) {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('sc-modal-open');
+      const body = modal.querySelector('.sc-modal-body');
+      if (body) body.scrollTop = 0;
+      if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+    }
+
+    document.querySelectorAll('[data-sc-open]').forEach(el => {
+      const targetId = el.getAttribute('data-sc-open');
+      const modal = targetId ? document.getElementById(targetId) : modals[0];
+      if (!modal) return;
+      el.style.cursor = 'pointer';
+      el.setAttribute('role', 'button');
+      el.setAttribute('tabindex', '0');
+      el.addEventListener('click', () => openModal(modal));
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(modal); }
+      });
+    });
+
+    modals.forEach(modal => {
+      modal.querySelectorAll('[data-sc-dismiss]').forEach(el => {
+        el.addEventListener('click', () => closeModal(modal));
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      modals.forEach(modal => {
+        if (modal.classList.contains('is-open')) closeModal(modal);
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
