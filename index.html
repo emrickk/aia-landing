@@ -105,8 +105,7 @@
     letter-spacing: -0.02em; display: flex; align-items: center; gap: var(--space-2);
   }
   .nav-logo .cube {
-    width: 18px; height: 18px; background: var(--fg-dark-mode);
-    border-radius: 2px; display: inline-block; transform: rotate(45deg);
+    width: 20px; height: 20px; display: inline-block; flex-shrink: 0;
   }
   .nav-links { display: flex; gap: var(--space-5); font-size: 14px; font-weight: 400; }
   .nav-links a {
@@ -1302,7 +1301,7 @@
       <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
         <span></span><span></span><span></span>
       </button>
-      <div class="nav-logo"><span class="cube"></span> Unity <span style="color:var(--muted-dark);font-weight:400;">AI</span></div>
+      <div class="nav-logo"><svg class="cube" viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 6 L24 10 L24 18 L16 22 L8 18 L8 10 Z"/><path stroke="#000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none" d="M8 10 L16 14 L24 10 M16 14 L16 22"/></svg> Unity <span style="color:var(--muted-dark);font-weight:400;">AI</span></div>
       <nav class="nav-links" id="nav-menu">
         <a href="#capabilities">Capabilities</a>
         <a href="#showcase">User Story</a>
