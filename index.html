@@ -830,11 +830,18 @@
   .faq-item.open .faq-q::after { transform: rotate(45deg); }
   .faq-a {
     max-height: 0; overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: max-height 0.4s ease;
     color: var(--muted-light);
-    font-size: 16px; line-height: 1.55;
+    font-size: 16px; line-height: 1.6;
   }
-  .faq-item.open .faq-a { max-height: 500px; padding-top: var(--space-3); }
+  .faq-item.open .faq-a { max-height: 3000px; padding-top: var(--space-3); }
+  .faq-a > * + * { margin-top: var(--space-3); }
+  .faq-a ul,
+  .faq-a ol { padding-left: 1.4em; }
+  .faq-a ul { list-style: disc; }
+  .faq-a ol { list-style: decimal; }
+  .faq-a li + li { margin-top: 6px; }
+  .faq-a strong { color: var(--fg-light-mode); font-weight: 600; }
 
   /* footer */
   footer {
@@ -1619,37 +1626,90 @@
 <section id="faq" class="block light">
   <div class="container">
     <div class="section-head center">
-      <span class="eyebrow">Frequently asked</span>
-      <h2>Questions.</h2>
+      <span class="eyebrow">Frequently asked questions</span>
+      <h2>Unity AI, answered.</h2>
     </div>
     <div class="faq-list">
       <div class="faq-item">
+        <div class="faq-q">What is Unity AI?</div>
+        <div class="faq-a">
+          <p>Unity AI is a suite of AI tools built into the Unity Editor for developers using Unity 6 or later. It has four components, each addressing a different part of the workflow:</p>
+          <ul>
+            <li><strong>Unity Assistant</strong> is a project-aware AI agent that runs as a panel inside the Editor. It has direct context of the project's scene hierarchy, settings, packages, code, asset library, platform targets, and serialized Inspector data, context that a general-purpose LLM does not have.</li>
+            <li><strong>Generators</strong> produce placeholder cubemaps, materials, sounds, 3D models, and similar dev-stage assets directly from the Editor. Every generated asset is tagged as AI-generated for audit and replacement before ship.</li>
+            <li><strong>AI Gateway</strong> lets developers connect verified third-party AI agents, including Anthropic Claude, OpenAI Codex, and Google Gemini, directly to the Unity Editor and use Unity's project context without consuming Unity AI Credits.</li>
+            <li><strong>The Unity MCP Server</strong> lets external tools and IDEs control the Unity Editor, useful for developers who already work primarily outside Unity.</li>
+          </ul>
+          <p>Unity AI is distinct from Unity Sentis. Unity AI is for the developer's authoring workflow inside the Editor; Sentis is the runtime engine for executing neural network models inside shipped games. Unity AI is also not a tool for prompting a finished game into existence. It is a coding and authoring assistant. The developer still designs the game, makes the architectural decisions, and ships it.</p>
+        </div>
+      </div>
+      <div class="faq-item">
         <div class="faq-q">What Unity versions does Unity AI work with?</div>
-        <div class="faq-a"><p>Unity 6.0 and above. Some features require specific 6.x minor versions, see docs.</p></div>
+        <div class="faq-a">
+          <p>Unity AI runs on Unity 6.0 and later. This is a hard requirement; earlier Unity versions, including Unity 2022 LTS, do not run Unity AI. The Assistant package installs from the Package Manager inside any Unity 6 release. The latest Unity AI features ship on the most recent Unity 6 minor version, and some advanced capabilities require a specific 6.x minor release.</p>
+        </div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">How do I get started?</div>
-        <div class="faq-a"><p>Install the Assistant package from Package Manager. Unity Personal starts with a 1,000 credit free trial, credit card required. Unity Pro, Enterprise, and Industry seats include Unity AI credits already.</p></div>
+        <div class="faq-q">How much does Unity AI cost, and how do I get started?</div>
+        <div class="faq-a">
+          <p>Unity AI is included with Unity Pro, Unity Enterprise, and Unity Industry seats at no extra charge, and includes a monthly allotment of Unity AI Credits. Unity Personal users get a 14-day trial with 1,000 credits (credit card required); the trial converts to a $10 per month Personal subscription unless cancelled.</p>
+          <p>To get started:</p>
+          <ol>
+            <li>Install Unity 6.0 or later from the Unity Hub or release archive.</li>
+            <li>In the Editor, click the AI button and install the Assistant package.</li>
+            <li>Link the project to a Unity Cloud project. Unity AI requires a linked Cloud project.</li>
+          </ol>
+          <p>Unity AI Credits meter usage of Unity Assistant and Generators. Credits reset monthly and do not roll over. AI Gateway and the official Unity MCP Server do not consume credits.</p>
+        </div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">Can I bring my own AI subscription?</div>
-        <div class="faq-a"><p>Yes. AI Gateway in Project Settings connects Claude, GPT, or other supported agents through your own key.</p></div>
+        <div class="faq-q">Can I bring my own AI subscription, like Claude, Codex, or Gemini?</div>
+        <div class="faq-a">
+          <p>Yes, and at no extra Credit cost. Unity's AI Gateway lets you connect a verified third-party agent (Anthropic Claude, OpenAI Codex, Google Gemini, or another supported agent) directly to the Unity Editor. The third-party agent uses Unity's project context the same way Unity Assistant does, and it runs on your existing subscription with that provider, not on Unity AI Credits. The Gateway is configured under Project Settings inside the Unity Editor.</p>
+          <p>If you already work primarily in an IDE-based agent, you can also drive the Unity Editor from your IDE through the official Unity MCP Server, which is also free.</p>
+        </div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">Is my project data used to train models?</div>
-        <div class="faq-a"><p>No, not by default. Developer Data sharing is off unless you opt in. Your runtime binary and media assets (images, meshes, audio) are never used for training.</p></div>
+        <div class="faq-q">How is Unity AI different from general AI coding tools?</div>
+        <div class="faq-a">
+          <p>General AI coding tools work on text files. They see what you paste in and, sometimes, the file open in your editor. Unity AI is built into the Unity Editor itself and sees the live state of the Unity project: scene hierarchy, settings, packages, code, asset library, platform targets, and serialized Inspector data. It can read what is actually in the scene, not just what is in a file.</p>
+          <p>That difference matters because most Unity work is not expressible in source files alone. A GameObject's behavior depends on the components attached to it, the values set in the Inspector, the scene it lives in, and the platform target. A coding agent that cannot see those is not equipped to make changes that hold up when you press Play.</p>
+          <p>Unity Assistant has three modes:</p>
+          <ul>
+            <li><strong>Ask Mode</strong> is conversational: guidance, troubleshooting, explanations.</li>
+            <li><strong>Agent Mode</strong> executes multi-step tasks directly in the Editor: creating GameObjects, wiring components, modifying scenes.</li>
+            <li><strong>Plan Mode</strong> is built for game development. It turns loose ideas into a clear implementation plan, then follows long end-to-end instructions, including full Game Design Documents.</li>
+          </ul>
+          <p>Every Unity AI code edit runs through Unity's compiler before it reaches your project, so failed edits stay inside the loop and never break your build.</p>
+        </div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">How is Unity AI different from a general coding agent?</div>
-        <div class="faq-a"><p>General coding agents read text files. Unity AI reads Scene state, executes Editor actions, and verifies in Play Mode.</p></div>
+        <div class="faq-q">Is my project data used to train AI models?</div>
+        <div class="faq-a">
+          <p>No. Developer Data Sharing is off by default, so your project data is not used to train our models. Studios that want to opt in can do so through the Unity Dashboard; opt-in is per organization, not per seat. With Developer Data Sharing on, your project summary and your prompts will be used to train our models. Your runtime binary and your media assets (images, meshes, audio) are never used for training, regardless of your Data Sharing choice.</p>
+          <p>Third-party agents brought in through the AI Gateway are subject to the data policies of their providers. If your team uses Anthropic Claude through the Gateway, Anthropic's data handling applies to that traffic.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How does Unity AI handle AI-generated assets, and are they safe to ship?</div>
+        <div class="faq-a">
+          <p>Every asset produced by a Unity AI Generator is tagged with metadata identifying it as AI-generated. The tag is set at generation time and travels with the asset, so AI-generated assets are findable at audit time. A developer or compliance reviewer can search the project for AI-generated assets, review them, and replace any that should not ship.</p>
+          <p>Unity recommends treating Generator output as placeholder content by default: credible enough to validate a mechanic, but intended to be replaced before ship. The recommended workflow is to generate placeholders to keep iteration fast, find the generated assets via metadata before ship, then replace the ones that need to be replaced.</p>
+          <p>First-party Generators use filters that reduce the risk of producing copyrighted material, but no filter is foolproof. Third-party models brought in through the AI Gateway are subject to the policies of those providers; Unity does not add a separate filter on top.</p>
+        </div>
       </div>
       <div class="faq-item">
         <div class="faq-q">Can I roll back Unity AI changes?</div>
-        <div class="faq-a"><p>Yes. Every action goes through Unity's undo stack, plus checkpoints for code and assets. Generated assets are auto-tagged for audit and replacement.</p></div>
+        <div class="faq-a">
+          <p>Yes. Every Unity AI change is reversible. Edits go through Unity's native undo stack, so a single Cmd+Z (or Ctrl+Z on Windows) reverses the most recent action just like a manual edit. For larger multi-step tasks, Unity AI creates checkpoints before and after each step, covering both code and assets, so you can roll an entire task back to the pre-change state without losing other work. Generated assets such as textures, meshes, and Prefabs are auto-tagged so you can audit what was created by AI versus what was authored by hand, and swap any AI-generated asset for a hand-authored replacement at any time.</p>
+        </div>
       </div>
       <div class="faq-item">
         <div class="faq-q">Do I need a third-party MCP server?</div>
-        <div class="faq-a"><p>No. Unity AI is native to the Editor. Optional MCP extensions connect Blender, Git, or custom tools. Unity's MCP Server is available if you want to drive the Editor from your IDE.</p></div>
+        <div class="faq-a">
+          <p>No. Unity AI is native to the Unity Editor and works out of the box without any third-party Model Context Protocol (MCP) server. Unity also ships its own official Unity MCP Server, which exposes 28 Editor tools to outside clients so you can drive the Unity Editor from your IDE instead of from the Unity AI panel. The official MCP Server is free and does not consume Unity AI Credits.</p>
+          <p>Optional MCP extensions let Unity AI talk to external tools such as Blender for asset workflows, Git for source control operations, or custom internal tooling your studio runs through MCP. None of these are required for the default Unity AI workflow inside the Editor.</p>
+        </div>
       </div>
     </div>
   </div>
