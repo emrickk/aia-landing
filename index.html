@@ -1450,7 +1450,7 @@
 </section>
 
 <!-- CAPABILITIES 02 · Start from something visual -->
-<section class="block alt">
+<section id="capabilities-visual" class="block alt">
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">Visual in. Scene out.</span>
@@ -1487,7 +1487,7 @@
 </section>
 
 <!-- CAPABILITIES 03 · Start from a problem -->
-<section class="block light">
+<section id="capabilities-debug" class="block light">
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">Every technical question, Unity AI.</span>
@@ -1525,7 +1525,7 @@
 </section>
 
 <!-- CAPABILITIES 04 · Stay in control -->
-<section class="block alt">
+<section id="capabilities-control" class="block alt">
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">Reversible, open, portable</span>
@@ -1571,7 +1571,7 @@
           <div class="showcase-tag">Roguelike · 2D</div>
           <div class="showcase-title">Cold Seagull</div>
           <div class="showcase-dev">Myrmex Synapsis</div>
-          <p class="showcase-quote">"My development life is no longer tools after tools with Unity AI. Two days became an hour."</p>
+          <p class="showcase-quote">"No more tool-building marathons. Two days became an hour."</p>
         </div>
       </article>
       <article class="showcase-card" data-sc-open="survivalModal" aria-haspopup="dialog">
@@ -1593,7 +1593,7 @@
           <div class="showcase-tag">Open Beta on Unity 6</div>
           <div class="showcase-title">This could be you.</div>
           <div class="showcase-dev">Building with Unity AI?</div>
-          <p class="showcase-quote">"We'd love to feature your project. Try Unity AI and tell us what you make."</p>
+          <p class="showcase-quote">"We'd love to hear from you. Try Unity AI and tell us what you make."</p>
         </div>
       </a>
     </div>
@@ -1707,7 +1707,7 @@
 </footer>
 
 <!-- SHOWCASE MODAL (template — content to be filled) -->
-<div class="sc-modal" id="showcaseModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="scModalTitle">
+<div class="sc-modal" id="showcaseModal" data-hash="cold-seagull" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="scModalTitle">
   <div class="sc-modal-backdrop" data-sc-dismiss></div>
   <div class="sc-modal-dialog" role="document">
     <button class="sc-modal-close" aria-label="Close" data-sc-dismiss>
@@ -1868,7 +1868,7 @@
 </div>
 
 <!-- SURVIVAL DENIED MODAL -->
-<div class="sc-modal" id="survivalModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="sdModalTitle">
+<div class="sc-modal" id="survivalModal" data-hash="survival-denied" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="sdModalTitle">
   <div class="sc-modal-backdrop" data-sc-dismiss></div>
   <div class="sc-modal-dialog" role="document">
     <button class="sc-modal-close" aria-label="Close" data-sc-dismiss>
@@ -2203,28 +2203,44 @@
     });
   })();
 
-  // Showcase modals — supports multiple, triggered by [data-sc-open="modalId"]
+  // Showcase modals — supports multiple, triggered by [data-sc-open="modalId"] or URL hash via [data-hash]
   (function () {
     const modals = document.querySelectorAll('.sc-modal');
     if (!modals.length) return;
     let lastFocused = null;
 
-    function openModal(modal) {
+    const modalsByHash = {};
+    modals.forEach(modal => {
+      if (modal.dataset.hash) modalsByHash[modal.dataset.hash] = modal;
+    });
+
+    function openModal(modal, opts) {
+      opts = opts || {};
       lastFocused = document.activeElement;
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('sc-modal-open');
       const closeBtn = modal.querySelector('.sc-modal-close');
       if (closeBtn) closeBtn.focus();
+      if (opts.updateHash !== false && modal.dataset.hash) {
+        history.replaceState(null, '', '#' + modal.dataset.hash);
+      }
     }
 
-    function closeModal(modal) {
+    function closeModal(modal, opts) {
+      opts = opts || {};
       modal.classList.remove('is-open');
       modal.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('sc-modal-open');
       const body = modal.querySelector('.sc-modal-body');
       if (body) body.scrollTop = 0;
       if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+      if (opts.updateHash !== false && modal.dataset.hash) {
+        const cur = (location.hash || '').replace(/^#/, '');
+        if (cur === modal.dataset.hash) {
+          history.replaceState(null, '', location.pathname + location.search);
+        }
+      }
     }
 
     document.querySelectorAll('[data-sc-open]').forEach(el => {
@@ -2252,6 +2268,30 @@
         if (modal.classList.contains('is-open')) closeModal(modal);
       });
     });
+
+    function syncFromHash() {
+      const key = (location.hash || '').replace(/^#/, '');
+      const target = modalsByHash[key];
+      modals.forEach(m => {
+        if (m !== target && m.classList.contains('is-open')) closeModal(m, { updateHash: false });
+      });
+      if (target && !target.classList.contains('is-open')) {
+        const showcase = document.getElementById('showcase');
+        if (showcase) showcase.scrollIntoView({ block: 'start', behavior: 'auto' });
+        openModal(target, { updateHash: false });
+      }
+    }
+
+    if (Object.keys(modalsByHash).length) {
+      window.addEventListener('hashchange', syncFromHash);
+      if (modalsByHash[(location.hash || '').replace(/^#/, '')]) {
+        if (document.readyState === 'loading') {
+          window.addEventListener('DOMContentLoaded', syncFromHash);
+        } else {
+          syncFromHash();
+        }
+      }
+    }
   })();
 </script>
 
