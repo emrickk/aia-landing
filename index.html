@@ -1559,10 +1559,10 @@
           <img src="assets/cold-seagull/gameplay.webp" alt="Cold Seagull gameplay: two seagulls on a beach at sunset with a hand of cards." loading="lazy" decoding="async" />
         </div>
         <div class="showcase-meta">
-          <div class="showcase-tag">Roguelike · Solo Developer</div>
+          <div class="showcase-tag">Roguelike · 2D</div>
           <div class="showcase-title">Cold Seagull</div>
           <div class="showcase-dev">Myrmex Synapsis</div>
-          <p class="showcase-quote">"Unity AI built me a tool. Two days became an hour."</p>
+          <p class="showcase-quote">"My development life is no longer tools after tools with Unity AI. Two days became an hour."</p>
         </div>
       </article>
       <article class="showcase-card" data-sc-open="survivalModal" aria-haspopup="dialog">
@@ -1570,7 +1570,7 @@
           <img src="assets/survival-denied/shot-06.webp" alt="Survival Denied VR gameplay: dual pistols aimed at a zombie in a low-poly desert." loading="lazy" decoding="async" />
         </div>
         <div class="showcase-meta">
-          <div class="showcase-tag">VR Roguelite · 2 Person Studio</div>
+          <div class="showcase-tag">Roguelite · VR</div>
           <div class="showcase-title">Survival Denied</div>
           <div class="showcase-dev">What Does This Button Do LLC</div>
           <p class="showcase-quote">"Unity AI is a happy story for me. It enables me to go forward."</p>
@@ -1715,22 +1715,13 @@
       </div>
 
       <div class="sc-modal-meta">
-        <div class="sc-modal-eyebrow">In the loop · Case study</div>
-        <h2 class="sc-modal-title" id="scModalTitle">Building Cold Seagull with Unity AI in the loop</h2>
+        <div class="sc-modal-eyebrow">In the loop</div>
+        <h2 class="sc-modal-title" id="scModalTitle">Building Cold Seagull with Unity AI</h2>
         <div class="sc-modal-dev">Myrmex Synapsis</div>
       </div>
 
       <div class="sc-modal-content">
         <p class="sc-modal-subhead">A new seagull arrives in the territory. The hierarchies are set. The alliances formed. The rivalries already drawn. Brute force is not the way up. The real weapons are words, gestures, and shared meals. Every alliance redefines the balance of the flock.</p>
-
-        <blockquote class="sc-modal-quote">
-          "It's a goofy Game. A compliment is a mechanic. An insult is a strategy. The food you share is manipulation."
-          <cite>Myrmex Synapsis</cite>
-        </blockquote>
-
-        <section>
-          <p>This is Cold Seagull, a procedural narrative roguelike deckbuilder where battles are won with words, not strength. The first demo is targeting Steam Next Fest in the near future. Behind it is a solo developer at Myrmex Synapsis. And for the last month, Unity AI.</p>
-        </section>
 
         <figure class="sc-modal-figure" data-lb-trigger aria-label="Enlarge Will card screenshot">
           <div class="sc-modal-media">
@@ -1739,21 +1730,30 @@
           <figcaption>A Will card. Resist mechanics, social damage, and links to other cards in the deck.</figcaption>
         </figure>
 
+        <blockquote class="sc-modal-quote">
+          "It's a goofy Game. A compliment is a mechanic. An insult is a strategy. The food you share is manipulation."
+          <cite>Myrmex Synapsis</cite>
+        </blockquote>
+
+        <section>
+          <p>This is Cold Seagull, a procedural narrative roguelike deckbuilder where battles are won with words, not strength. The first demo is targeting Steam Next Fest in the near future. Behind it is a solo developer at Myrmex Synapsis. <strong>And for the last month, Unity AI.</strong></p>
+        </section>
+
         <section>
           <h3>A solo studio building a system heavy game.</h3>
           <p>Myrmex brings a software engineering background to game development. Cold Seagull is, in part, where that work lives now.</p>
           <p>The game runs on a procedural narrative engine the studio built over eight months. A custom domain-specific language authors the branching stories that run on top of it. Around those two pieces sit a card editor, a narrative management tool, and, in the studio's words, "tons of custom Unity tools."</p>
-          <p>That is the project Unity AI walked into a month ago.</p>
+          <p><strong>That is the project Unity AI walked into a month ago.</strong></p>
         </section>
 
         <section>
           <h3>Switching to Unity AI.</h3>
           <p>Myrmex had spent the last year cycling through general-purpose AI assistants. They worked at first, but at the scale Cold Seagull required, a monthly token quota could disappear in a single day. More than cost, the studio needed an assistant that could hold the game's interconnected systems across tasks without rebuilding context every time. None of them did.</p>
-          <p>Switching to Unity AI changed the studio's daily workflow immediately.</p>
+          <p><strong>Switching to Unity AI changed the studio's daily workflow immediately.</strong></p>
         </section>
 
         <blockquote class="sc-modal-quote">
-          "Unity AI knows it's a Unity project. It knows the scope, understands the code, has access to the architecture."
+          "Unity AI knows it's a Unity project. It knows the scope, understands the code, has access to the architecture. Which made working with Unity AI very easy."
           <cite>Myrmex Synapsis</cite>
         </blockquote>
 
@@ -1762,8 +1762,9 @@
         </section>
 
         <section>
-          <h3>Building a debugging tool, end to end.</h3>
-          <p>One real example of the workflow: the studio needed a debugging tool that would hover over any agent in Cold Seagull's colony and surface the agent's name, temperament, stance toward the player, and live state. Useful for development. Not trivial to build, given an existing tooltip system already in production for cards.</p>
+          <h3>Building debugging tools, end to end.</h3>
+          <p>Cold Seagull needs a lot of tools. And here is one example.</p>
+          <p>The studio needed a debugging tool that would hover over any agent in Cold Seagull's colony and surface the agent's name, temperament, stance toward the player, and live state. Useful for development. Not trivial to build, given an existing tooltip system already in production for cards.</p>
           <p>The studio described what it wanted, set the constraints, and asked Unity AI for a plan first. A general AI assistant tends to lose the thread on a request this layered. Unity AI stayed on the goal, held the constraints across the whole task, and answered with structure.</p>
         </section>
 
@@ -1790,7 +1791,7 @@
         <section>
           <p>The studio reviewed the plan, approved it, and let Unity AI execute. The debugging tooltip now lives in the Editor.</p>
           <p>End to end. One conversation, one plan, one execution. The kind of multi-step refactor that normally splinters across a week, delivered seamlessly inside the workflow.</p>
-          <p>The same pattern shows up in smaller pieces all over the project. When the studio needed a loading screen for the card chart, Unity AI built the prefab, wired the inspector references, and dropped it into the scene. When the studio was driving animation transitions from sound effects in the DSL, Unity AI created the animator controller, completed the function, associated the timings, and left the existing pipeline intact. When collaborators without a Unity-capable machine needed a way to contribute to Cold Seagull, Unity AI built a standalone Photino desktop app in C# in a single working session, respecting the studio's existing conventions.</p>
+          <p>The same pattern shows up in smaller pieces all over the project. Unity AI is now everywhere in the game.</p>
         </section>
 
         <div class="sc-modal-media-grid">
@@ -1809,7 +1810,7 @@
         </div>
 
         <blockquote class="sc-modal-quote">
-          "Unity AI saw my architecture and created the controller, completed the function, associated them at the correct moment, and left my pipeline intact. That's what differentiates it: it knows the environment."
+          "Unity AI... something like it just knows my game, so it always builds the things I need usually within a few iterations, if not one shot."
           <cite>Myrmex Synapsis</cite>
         </blockquote>
 
@@ -1890,20 +1891,26 @@
       </div>
 
       <div class="sc-modal-meta">
-        <div class="sc-modal-eyebrow">In the loop · Case study</div>
-        <h2 class="sc-modal-title" id="sdModalTitle">Building Survival Denied with Unity AI in the loop</h2>
+        <div class="sc-modal-eyebrow">In the loop</div>
+        <h2 class="sc-modal-title" id="sdModalTitle">Building Survival Denied with Unity AI</h2>
         <div class="sc-modal-dev">What Does This Button Do LLC</div>
       </div>
 
       <div class="sc-modal-content">
         <p class="sc-modal-subhead">A child sits in the Unity Editor. Next to her, her brother is in VR, gun raised, zombies closing in. She drags a power-up from the project folder into the scene. Drops a weapon at his feet. Tells him where to aim.</p>
 
-        <p class="sc-modal-subhead">That is how Survival Denied got its couch co-op mode. Dr.Zed built it with Unity AI.</p>
+        <figure class="sc-modal-figure" data-lb-trigger aria-label="Enlarge subhead gameplay screenshot">
+          <div class="sc-modal-media">
+            <img src="assets/survival-denied/shot-06.webp" alt="Survival Denied VR gameplay: dual pistols aimed at zombies in a low-poly desert." loading="lazy" decoding="async" />
+          </div>
+        </figure>
+
+        <p class="sc-modal-subhead"><strong>That is how Survival Denied got its couch co-op mode. Dr.Zed built it with Unity AI.</strong></p>
 
         <section>
           <h3>When a game designer takes the programmer role.</h3>
-          <p>Survival Denied is a VR action roguelite, live on Steam Early Access and heading for a 1.0 launch this year.</p>
-          <p>Dr.Zed brings the game design instincts, the 3D, the world. More than a decade in Unity. 3ds Max since 1999. He can read code fluently. Writing efficient code has always been the wall.</p>
+          <p><strong>Survival Denied is a VR action roguelite, live on Steam Early Access and heading for a 1.0 launch this year.</strong></p>
+          <p>Dr.Zed brings the game design instincts, the 3D, the world. More than a decade in Unity. He can read code fluently. Writing efficient code has always been the wall.</p>
           <p>He wanted the game in his head to land on screen on his own clock, without parking ideas because he could not implement them himself.</p>
         </section>
 
@@ -1930,22 +1937,7 @@
         </div>
 
         <section>
-          <h3>Refactoring at scale.</h3>
-          <p>Survival Denied had outgrown its early code. Instantiation needed to move to object pooling across weapons, pickups, and effects. The kind of refactor that can freeze a small team for a week.</p>
-          <p>Dr.Zed handed the pass to Unity AI. When edges broke, a weapon that vanished on a second pickup, null refs after a swap, behavioral drift in a handful of systems, each one became its own focused chat.</p>
-        </section>
-
-        <blockquote class="sc-modal-quote">
-          "Unity AI is like a teammate. My habit is to separate individual items into two or three different chats, and it delivers for me within a few iterations."
-          <cite>Dr.Zed</cite>
-        </blockquote>
-
-        <section>
-          <p>Dr.Zed kept moving forward.</p>
-        </section>
-
-        <section>
-          <h3>The Editor is the input.</h3>
+          <h3>Input has never been easier.</h3>
           <p>The way Dr.Zed talks to Unity AI now is mostly by dragging things in. Prefabs, scripts, scene objects: straight from the Project folder into the chat window. Drag, drop, then describe what to do with them. No script hunting. No copy-pasting filenames. No describing "that thing in the inspector."</p>
           <p>For Dr.Zed, drag-and-drop has become the daily norm for talking to Unity AI. It is faster than typing. It is more precise than describing. It is convenient enough that he reaches for it without thinking.</p>
         </section>
@@ -1961,20 +1953,16 @@
 
         <section>
           <h3>Adding a feature has never been easier.</h3>
-          <p>Dr.Zed wanted a visual health indicator on the enemies. The health bar prefab was already in the scene. The behavior was specific. He typed it in:</p>
+          <p>Dr.Zed always has new ideas he wants to explore. New enemies. New weapons. New systems. With Plan Mode, every new feature starts the same way: Dr.Zed describes what he wants, Unity AI drafts the approach before touching a line of code, and Dr.Zed approves before anything ships.</p>
         </section>
 
         <blockquote class="sc-modal-quote">
-          "I want to add a visual health indicator to the enemies. I have already added a health bar prefab to the enemies.
-          <br><br>
-          Please update the fill amount of the Health Circle so it matches each enemy's current health percentage.
-          <br><br>
-          I do not want it to be visible by default. I only want it to flash briefly when the enemy takes damage, then fade away over 1 second."
+          "Unity AI is like a teammate. I want to add a visual health indicator to the enemies. I want to talk about the new boss I am going to add. It knows all and can implement without back and forth."
           <cite>Dr.Zed</cite>
         </blockquote>
 
         <section>
-          <p>Unity AI delivered in one shot. Fill amount tied to each enemy's health. Hidden by default. A brief flash on damage. A one second fade. Exactly as specified.</p>
+          <p>Take the enemy health indicator. Dr.Zed wanted a circle on each enemy that flashes on damage and fades over a second. He typed the spec in. Unity AI delivered in one shot. Fill amount tied to each enemy's health. Hidden by default. A brief flash on damage. A one second fade. Exactly as specified.</p>
         </section>
 
         <figure class="sc-modal-figure" data-lb-trigger aria-label="Enlarge add-life-bar video">
@@ -1992,9 +1980,9 @@
         </section>
 
         <section>
-          <h3>Where intent meets implementation.</h3>
-          <p>A recent example. Two zombies die near each other. Both drop weapon crates. The crates explode close together, and the resulting pickups overlap. The player walks over, collects one, and the other vanishes into the same trigger. A small bug, a frustrating one.</p>
-          <p>The fix is conceptual, not a feature. Dr.Zed grabs the relevant pickup prefabs from the Project folder, drags them into the chat as context, and types the problem in plain English: when two or more crates are destroyed nearby, spawn the pickups with at least 0.5 units of space between them.</p>
+          <h3>Where debugging becomes just a sentence.</h3>
+          <p>A recent example. Two zombies die near each other. Both drop weapon crates. The crates explode close together, and the resulting pickups overlap. A small bug, a frustrating one.</p>
+          <p><strong>The fix is conceptual, not a feature. Dr.Zed grabs the relevant pickup prefabs from the Project folder, drags them into the chat as context, and types the problem in plain English.</strong></p>
         </section>
 
         <figure class="sc-modal-figure" data-lb-trigger aria-label="Enlarge Plan Mode walkthrough video">
@@ -2007,9 +1995,8 @@
         </figure>
 
         <section>
-          <p>Unity AI has Plan Mode for this. Plan Mode drafts the approach before touching a line of code. Dr.Zed reads it, then adds one more requirement in the feedback box: pickups must not end up inside walls, trees, or other geometry. Use raycast or navmesh.</p>
-          <p>The plan updates. He approves. Unity AI implements the fix, then verifies its own work: project compiles clean, console runs clean, bug closed.</p>
-          <p>The same workflow is how a stat editor for weapon balancing showed up one afternoon. Mid-conversation, Dr.Zed decided he needed one. A few iterations later, it existed.</p>
+          <p>Unity AI fixes the bug in one shot. Project compiles clean. Console runs clean. Bug closed.</p>
+          <p>The same conversational style builds the tools around the game. A stat editor for weapon balancing showed up one afternoon. Mid-conversation, Dr.Zed decided he needed one. A few iterations later, it existed.</p>
         </section>
 
         <figure class="sc-modal-figure" data-lb-trigger aria-label="Enlarge custom weapon balance editor screenshot">
@@ -2018,11 +2005,6 @@
           </div>
           <figcaption>Made by Unity AI.</figcaption>
         </figure>
-
-        <blockquote class="sc-modal-quote">
-          "Unity AI has created this beautiful editor tool while we were having this conversation. Several back and forth of course, but I am finding ways to steer it to do what I need."
-          <cite>Dr.Zed</cite>
-        </blockquote>
 
         <section>
           <h3>Looking ahead.</h3>
