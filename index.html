@@ -1644,9 +1644,15 @@
         </div>
       </div>
       <div class="faq-item">
+        <div class="faq-q">Why should I use Unity's agent?</div>
+        <div class="faq-a">
+          <p>Unity AI's agent is built specifically for game development inside the Unity Editor and has direct access to project context that general-purpose LLMs do not have. It is trained on Unity knowledge from 20+ years of best practices, support tickets, and engine source, so it understands the workflows that game developers actually use to build and ship games. Unity's agent reads your scene hierarchy, inspects GameObjects and their components, drives Editor actions directly, and verifies that changes behave as intended in Play Mode. The result is Unity-shaped help end to end, rather than generic suggestions you have to translate into Unity yourself.</p>
+        </div>
+      </div>
+      <div class="faq-item">
         <div class="faq-q">What Unity versions does Unity AI work with?</div>
         <div class="faq-a">
-          <p>Unity AI runs on Unity 6.0 and later. This is a hard requirement; earlier Unity versions, including Unity 2022 LTS, do not run Unity AI. The Assistant package installs from the Package Manager inside any Unity 6 release. The latest Unity AI features ship on the most recent Unity 6 minor version, and some advanced capabilities require a specific 6.x minor release.</p>
+          <p>Unity AI runs on Unity 6.0 and later. This is a hard requirement; earlier Unity versions, including Unity 2022 LTS, do not run Unity AI. The Assistant package installs from the Package Manager inside any Unity 6 release. The latest Unity AI features ship on the most recent Unity 6 minor version, and some advanced capabilities require a specific 6.x minor release. Unity AI also requires accepting the in-editor terms at first run.</p>
         </div>
       </div>
       <div class="faq-item">
@@ -1667,6 +1673,12 @@
         <div class="faq-a">
           <p>Yes, and at no extra Credit cost. Unity's AI Gateway lets you connect a verified third-party agent (Anthropic Claude, OpenAI Codex, Google Gemini, or another supported agent) directly to the Unity Editor. The third-party agent uses Unity's project context the same way Unity Assistant does, and it runs on your existing subscription with that provider, not on Unity AI Credits. The Gateway is configured under Project Settings inside the Unity Editor.</p>
           <p>If you already work primarily in an IDE-based agent, you can also drive the Unity Editor from your IDE through the official Unity MCP Server, which is also free.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What AI models does Unity AI use?</div>
+        <div class="faq-a">
+          <p>Unity AI uses a combination of third-party AI models behind the scenes, routed by purpose to balance latency and quality. The full current list of models is published on the Unity Guiding Principles page. If you would prefer to run Unity AI on a specific model you trust, you can use the AI Gateway to bring your own subscription (Anthropic Claude, OpenAI Codex, Google Gemini, or another supported agent) and route Unity AI's calls through that model instead.</p>
         </div>
       </div>
       <div class="faq-item">
@@ -1696,6 +1708,13 @@
           <p>Every asset produced by a Unity AI Generator is tagged with metadata identifying it as AI-generated. The tag is set at generation time and travels with the asset, so AI-generated assets are findable at audit time. A developer or compliance reviewer can search the project for AI-generated assets, review them, and replace any that should not ship.</p>
           <p>Unity recommends treating Generator output as placeholder content by default: credible enough to validate a mechanic, but intended to be replaced before ship. The recommended workflow is to generate placeholders to keep iteration fast, find the generated assets via metadata before ship, then replace the ones that need to be replaced.</p>
           <p>First-party Generators use filters that reduce the risk of producing copyrighted material, but no filter is foolproof. Third-party models brought in through the AI Gateway are subject to the policies of those providers; Unity does not add a separate filter on top.</p>
+          <p>Developers are responsible for managing app store AI disclosures and verifying usage rights for any generated content shipped in a commercial release.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I disable Unity AI's Generators?</div>
+        <div class="faq-a">
+          <p>Yes. Unity AI gives studios granular control: Generators can be turned off completely in the Unity Dashboard while Unity Assistant remains active. This is useful for teams that want the agent's coding and Editor capabilities but prefer to source all art, audio, and other assets from human-authored or licensed sources rather than from generative AI. Generator settings are managed at the organization level in the Dashboard.</p>
         </div>
       </div>
       <div class="faq-item">
@@ -1709,6 +1728,30 @@
         <div class="faq-a">
           <p>No. Unity AI is native to the Unity Editor and works out of the box without any third-party Model Context Protocol (MCP) server. Unity also ships its own official Unity MCP Server, which exposes 28 Editor tools to outside clients so you can drive the Unity Editor from your IDE instead of from the Unity AI panel. The official MCP Server is free and does not consume Unity AI Credits.</p>
           <p>Optional MCP extensions let Unity AI talk to external tools such as Blender for asset workflows, Git for source control operations, or custom internal tooling your studio runs through MCP. None of these are required for the default Unity AI workflow inside the Editor.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is Unity AI the same as Unity Muse?</div>
+        <div class="faq-a">
+          <p>No. Unity Muse is a deprecated product offering that featured Unity's first-party generative models. Unity AI is a separate, current product that uses third-party AI models and focuses on the developer's authoring workflow inside the Unity Editor. If you used Unity Muse previously, Unity AI is the supported successor product.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What is happening to Unity Sentis?</div>
+        <div class="faq-a">
+          <p>Unity Sentis remains active and serves as the engine for running neural network models natively inside the Unity Runtime, in shipped games. Unity AI and Unity Sentis are complementary, not overlapping: Unity AI is for the developer's authoring workflow inside the Editor; Sentis is for the player's runtime experience. A studio can use Unity AI to build a game, ship it with Sentis running player-facing neural network features inside the runtime, and the two products do not conflict.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What terms apply to Unity AI?</div>
+        <div class="faq-a">
+          <p>Unity AI is governed by the Unity Terms of Service that generally apply to Evaluation Versions of Unity offerings, by specific click-through terms presented at first use, and by Unity's Guiding Principles during the Beta phase.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do Unity Core Standards apply to third-party AI tools and MCPs?</div>
+        <div class="faq-a">
+          <p>Yes. All third-party AI tools and MCP integrations are subject to Unity Core Standards, including tools distributed outside the Asset Store or Unity Package Manager. A third-party agent connected through AI Gateway, or an MCP-aware tool driving the Editor through the Unity MCP Server, must comply with the same standards as any other Unity ecosystem tool.</p>
         </div>
       </div>
     </div>
